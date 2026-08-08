@@ -1,0 +1,15 @@
+$date Mock counterexample trace $end
+$version EQY mock fixture $end
+$timescale 1ns $end
+$scope module nebula_top $end
+$var wire 20 ! gold_acc_out [19:0] $end
+$var wire 20 " gate_acc_out [19:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+b00000000000000000001 !
+b00000000000000000000 "
+#1
+b00000000000000010110 !
+b00000000000000010101 "
+$comment gold and gate diverge at acc_out bit 0 from cycle 1 $end

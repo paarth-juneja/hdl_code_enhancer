@@ -1,0 +1,54 @@
+# ─── Generated run artifacts ───────────────────────────────
+# Reproducible from the manifest, not source.
+/runs/
+/candidates/
+/experiments/
+
+# ─── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test / type / lint caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+
+# ─── EDA tool transients ───────────────────────────────────
+# Note: source lives in rtl/ and tests/fixtures/ and is NOT ignored
+# (*.v, *.sdc, *.tmpl are tracked). These are throwaway tool outputs.
+*.log
+*.jou
+*.vcd
+*.fst
+yosys.log
+slpp_all/
+
+# ─── Claude Code (per-machine, not shared) ─────────────────
+.claude/settings.local.json
+
+# ─── Rendered docs (keep the .md sources, not the binaries) ─
+# Regenerated from the markdown; excluded to keep history clean.
+*.pdf
+*.docx
+
+# ─── OS / editor cruft ─────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+.idea/

@@ -1,0 +1,67 @@
+Startpoint: u_dsp.acc_reg[7]
+            (rising edge-triggered flip-flop clocked by clk_a_div)
+Endpoint: u_dsp.out_reg[15]
+          (rising edge-triggered flip-flop clocked by clk_a_div)
+Path Group: clk_a_div
+Path Type: max
+
+   Delay     Time   Description
+------------------------------------------------------------
+   0.0000   0.0000   clock clk_a_div (rise edge)
+   0.0000   0.0000   clock network delay (propagated)
+   0.0410   0.0410 ^ u_dsp.acc_reg[7]/CK (DFF_X1)
+   0.0920   0.1330   _add_1_ (ADD_X1)
+   0.0880   0.2210   _add_2_ (ADD_X1)
+   0.0910   0.3120   _add_3_ (ADD_X1)
+   0.0890   0.4010   _add_4_ (ADD_X1)
+   0.0900   0.4910   _add_5_ (ADD_X1)
+   0.0870   0.5780   _add_6_ (ADD_X1)
+   0.0930   0.6710   _add_7_ (ADD_X1)
+   0.0450   0.7160   _mux_scaled_ (MUX2_X1)
+   0.0300   0.7460 ^ u_dsp.out_reg[15]/D (DFF_X1)
+   data arrival time          @@ARRIVAL_1@@
+
+   clock clk_a_div (rise edge)
+   data required time         3.9000
+------------------------------------------------------------
+   data required time         3.9000
+   data arrival time          @@ARRIVAL_1@@
+------------------------------------------------------------
+   slack (VIOLATED)           @@SLACK_1@@
+
+
+Startpoint: u_dsp.acc_reg[3]
+            (rising edge-triggered flip-flop clocked by clk_a_div)
+Endpoint: u_dsp.out_reg[9]
+          (rising edge-triggered flip-flop clocked by clk_a_div)
+Path Group: clk_a_div
+Path Type: max
+
+   Delay     Time   Description
+------------------------------------------------------------
+   0.0410   0.0410 ^ u_dsp.acc_reg[3]/CK (DFF_X1)
+   0.0910   0.1320   _add_3_ (ADD_X1)
+   0.0890   0.2210   _add_4_ (ADD_X1)
+   0.0300   0.2510 ^ u_dsp.out_reg[9]/D (DFF_X1)
+   data arrival time          0.2510
+   data required time         3.9000
+------------------------------------------------------------
+   slack (VIOLATED)           @@SLACK_2@@
+
+
+Startpoint: u_cdc.data_reg[4]
+            (rising edge-triggered flip-flop clocked by clk_a_div)
+Endpoint: u_cdc.req
+          (rising edge-triggered flip-flop clocked by clk_a_div)
+Path Group: clk_a_div
+Path Type: max
+
+   Delay     Time   Description
+------------------------------------------------------------
+   0.0410   0.0410 ^ u_cdc.data_reg[4]/CK (DFF_X1)
+   0.0620   0.1030   _and_2_ (AND2_X1)
+   0.0300   0.1330 ^ u_cdc.req/D (DFF_X1)
+   data arrival time          0.1330
+   data required time         3.9000
+------------------------------------------------------------
+   slack (VIOLATED)           @@SLACK_3@@
