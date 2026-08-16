@@ -1,0 +1,12 @@
+# Runtime dependencies for the orchestrator.
+#
+# Deliberately minimal: the CLI uses argparse rather than Typer/Rich so that a
+# checkout needs only these two packages to run. pytest is here because the
+# mock loop is the project's regression harness, not an optional extra.
+#
+# The EDA tools themselves are not Python packages -- they are reached through
+# the wrappers in tools/bin/, which run them inside the ORFS Docker image.
+
+pydantic>=2.0
+PyYAML>=6.0
+pytest>=8.0

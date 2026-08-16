@@ -1,0 +1,172 @@
+# nebula.project.yaml -- the project manifest.
+#
+# Every path here is relative to this file's directory and is resolved at use
+# time (orchestrator/config.py), never stored absolute, so the project stays
+# portable. The one exception is toolchain binaries, which are absolute because
+# they are host entry points rather than project inputs.
+#
+# Reconstructed 16 Aug 2026 after the NTFS volume corrupted the original. The
+# values are not guesses: they are taken from the generated scripts of the last
+# green real-backend run (runs/20260808T124503Z_realscreen), which this manifest
+# produced, cross-checked against the schema in orchestrator/config.py.
+
+schema_version: "1.0.0"
+
+project_id: truth_fixture
+display_name: Nebula truth fixture
+
+# ---------------------------------------------------------------------------
+# Design. File order matters -- Yosys reads them in the order given.
+# ---------------------------------------------------------------------------
+design:
+  top_module: nebula_top
+  rtl_dir: rtl
+  file_list:
+    - path: rtl/clk_div.v
+    - path: rtl/cdc_sync.v
+    - path: rtl/dsp_core.v
+    - path: rtl/nebula_top.v
+  include_dirs: []
+  defines: {}
+  parameters:
+    W: 16
+
+# ---------------------------------------------------------------------------
+# Constraints. The SDC is a frozen input: it is hashed into manifest.lock.json
+# and policy.py refuses a verdict if it differs between two compared runs.
+#
+# clock_expectations is the inventory that makes a disappearing clock
+# detectable -- 20_sta writes clocks.rpt and it is checked against this list.
+# ---------------------------------------------------------------------------
+constraints:
+  sdc_file: constraints/nebula.sdc
+  clock_expectations:
+    - name: clk_a
+      type: master
+      period_ns: 4.000
+    - name: clk_b
+      type: master
+      period_ns: 5.500
+    - name: clk_a_div
+      type: generated
+      source: clk_a
+      divide_by: 2
+    - name: clk_b_div
+      type: generated
+      source: clk_b
+      divide_by: 2
+  asynchronous_groups:
+    - [clk_a, clk_a_div]
+    - [clk_b, clk_b_div]
+
+# ---------------------------------------------------------------------------
+# Platform. These are symlinks into the host ORFS clone; Path.resolve() follows
+# them, which is why the generated synth.ys shows the ORFS path directly.
+# ---------------------------------------------------------------------------
+platform:
+  platform_id: nangate45
+  liberty: platform/nangate45/NangateOpenCellLibrary_typical.lib
+  lef:
+    - platform/nangate45/NangateOpenCellLibrary.tech.lef
+    - platform/nangate45/NangateOpenCellLibrary.macro.lef
+  analysis_corners: [typical]
+
+# ---------------------------------------------------------------------------
+# Toolchain. Each binary is a thin wrapper that runs the real tool inside the
+# ORFS Docker image, mounting the workspace and the ORFS clone at identical
+# host paths so absolute paths in generated scripts resolve unchanged inside
+# the container. Absolute by necessity: they are host entry points.
+# ---------------------------------------------------------------------------
+toolchain:
+  tools:
+    yosys:
+      binary: /home/juneja/nebula/tools/bin/yosys
+    # Keyed "opensta" to match adapters/opensta.py; the wrapper is named sta
+    # after the in-image binary it runs.
+    opensta:
+      binary: /home/juneja/nebula/tools/bin/sta
+    eqy:
+      binary: /home/juneja/nebula/tools/bin/eqy
+    orfs:
+      binary: /home/juneja/nebula/tools/bin/make
+      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+
+# ---------------------------------------------------------------------------
+# Objective. Maximise worst negative slack, with area held inside a declared
+# regression limit rather than traded away silently.
+# ---------------------------------------------------------------------------
+objective:
+  primary_metric: wns
+  direction: maximize
+  guardrails:
+    max_area_regression_pct: 5.0
+    max_cell_count_regression_pct: 5.0
+    latency_change_allowed: false
+    interface_change_allowed: false
+    clocks_must_be_preserved: true
+  tie_breakers: [cell_area, cell_count]
+
+run_policy:
+  max_iterations: 5
+  max_candidates: 10
+  approval_mode: auto
+  authoritative_stage: orfs
+  timeouts_s:
+    synth: 1800
+    sta: 900
+    screen: 1800
+    eqy: 3600
+    orfs: 14400
+
+# ---------------------------------------------------------------------------
+# Transformations. Cycle-exact combinational restructuring only. Pipelining,
+# retiming, clock gating, reset and CDC changes stay forbidden because they
+# need a stronger specification than equivalence checking alone provides.
+# ---------------------------------------------------------------------------
+transformations:
+  allowed:
+    - balanced_adder_tree
+    - mux_priority_to_parallel
+    - common_subexpression_extraction
+    - constant_folding
+    - operator_strength_reduction
+  forbidden:
+    - pipelining
+    - retiming
+    - clock_gating
+    - reset_restructuring
+    - cdc_modification
+    - interface_change
+  change_budget:
+    max_changed_lines: 40
+    max_changed_files: 2
+
+# ---------------------------------------------------------------------------
+# Security. protected_paths are refused by the patcher regardless of what the
+# model proposes; each must also appear in design.file_list so the patcher can
+# guard a file it knows about (enforced by config.validate_inputs).
+# ---------------------------------------------------------------------------
+security:
+  model_data_policy: bounded_context_only
+  protected_paths:
+    - rtl/clk_div.v
+    - rtl/cdc_sync.v
+  editable_paths:
+    - rtl/dsp_core.v
+  redact_patterns: []
+
+equivalence:
+  relation: cycle_exact
+  gold_top: nebula_top
+  gate_top: nebula_top
+  reset_assumption: reset_sequence_identical
+  blackboxes: []
+
+llm:
+  propose_model: claude-opus-5
+  repair_model: claude-opus-5
+  narrate_model: claude-sonnet-5
+  max_output_tokens: 4096
+  temperature: 0.2
+  max_repairs_per_iteration: 1
+  prompt_version: "1.0.0"

@@ -4,6 +4,10 @@
 /candidates/
 /experiments/
 
+# Throwaway driver for exercising the real backend by hand; not part of the
+# orchestrator and not required by any test.
+/scratch_real_screen.py
+
 # ─── Python ────────────────────────────────────────────────
 __pycache__/
 *.py[cod]

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Auto-generated: run OpenSTA from the ORFS Docker image as if it were a host binary.
+# Workspace + ORFS clone are mounted at identical host paths so absolute paths
+# baked into generated scripts resolve unchanged inside the container.
+set -euo pipefail
+NEBULA="/home/juneja/nebula"
+ORFS="/home/juneja/OpenROAD-flow-scripts"
+exec docker run --rm \
+  -u "$(id -u):$(id -g)" \
+  -e HOME=/tmp \
+  -v "$NEBULA:$NEBULA" \
+  -v "$ORFS:$ORFS" \
+  -w "$PWD" \
+  openroad/orfs:latest \
+  /OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta "$@"
