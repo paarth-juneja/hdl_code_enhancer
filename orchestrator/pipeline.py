@@ -117,8 +117,11 @@ def run_baseline(
     # post-route. The mock returns the same baseline numbers regardless of phase.
     _stage_backend_hook(backend, "orfs", "baseline")
     orfs_dir = workspace.stage_dir("orfs")
-    backend.execute(orfs_adapter.orfs_invocation(config, config.rtl_files(), orfs_dir))
-    orfs_qor, orfs_timing = parse_orfs_metrics(orfs_dir / "metadata-base.json", workspace.run_id)
+    orfs_inv = orfs_adapter.orfs_invocation(config, config.rtl_files(), orfs_dir)
+    backend.execute(orfs_inv)
+    orfs_qor, orfs_timing = parse_orfs_metrics(
+        orfs_inv.expected_outputs["metadata"], workspace.run_id
+    )
     orfs_timing.clocks = timing.clocks
     workspace.save_json("orfs", "orfs_qor.json", orfs_qor)
 
@@ -315,12 +318,15 @@ def _run_iteration(
     # -- authoritative physical run ----------------------------------------
     _stage_backend_hook(backend, "orfs", candidate_id)
     orfs_dir = ws.stage_dir("orfs", candidate_id)
-    orfs_proc = backend.execute(orfs_adapter.orfs_invocation(config, candidate_files, orfs_dir))
+    orfs_inv = orfs_adapter.orfs_invocation(config, candidate_files, orfs_dir)
+    orfs_proc = backend.execute(orfs_inv)
     if orfs_proc.status is not Status.PASS:
         machine.advance("failed")
         return _reject(record, machine, ws, index, reason="physical_failed",
                        detail=[orfs_proc.stderr_tail], printer=printer, advanced=True)
-    cand_qor, cand_timing = parse_orfs_metrics(orfs_dir / "metadata-base.json", ws.run_id)
+    cand_qor, cand_timing = parse_orfs_metrics(
+        orfs_inv.expected_outputs["metadata"], ws.run_id
+    )
     # Clock inventory is verified by name at STA, where names exist; ORFS metadata
     # only reports a count. Carry the screen-stage clock names into the
     # authoritative timing so the preservation check compares like with like.

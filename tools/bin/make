@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Auto-generated: run the ORFS flow (GNU make) from the ORFS Docker image as if
+# it were a host binary.
+#
+# Unlike the yosys/sta/eqy wrappers, this one does NOT run in $PWD. ORFS is
+# driven from its own flow directory, and the image ships a matched set of flow
+# scripts and tool binaries -- so make runs against the IMAGE's
+# /OpenROAD-flow-scripts/flow, exactly as ORFS's own util/docker_shell does.
+# Using the host clone's scripts against the image's binaries would couple two
+# independently-versioned trees.
+#
+# The host ORFS clone is still mounted, because the PDK paths in the generated
+# config.mk resolve through platform/nangate45/ symlinks into that clone.
+#
+# WORK_HOME is supplied per-run by adapters/orfs.py, which points it at the
+# stage directory so results, logs, reports and objects land inside the Nebula
+# run tree rather than in the ORFS checkout.
+set -euo pipefail
+NEBULA="/home/juneja/nebula"
+ORFS="/home/juneja/OpenROAD-flow-scripts"
+exec docker run --rm \
+  -u "$(id -u):$(id -g)" \
+  -e HOME=/tmp \
+  -e FLOW_HOME=/OpenROAD-flow-scripts/flow \
+  -e YOSYS_EXE=/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys \
+  -e OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad \
+  -e KLAYOUT_CMD=/usr/bin/klayout \
+  -v "$NEBULA:$NEBULA" \
+  -v "$ORFS:$ORFS" \
+  -w /OpenROAD-flow-scripts/flow \
+  openroad/orfs:latest \
+  make "$@"

@@ -218,7 +218,12 @@ class MockBackend(Backend):
             "finish__power__total": None,
             "flow__status": "ok",
         }
-        write_text(out / "metadata-base.json", json.dumps(payload, indent=2) + "\n")
+        # Written where the adapter declared it, so the mock and the real flow
+        # agree on one path instead of two that have to be kept in step.
+        write_text(
+            invocation.expected_outputs["metadata"],
+            json.dumps(payload, indent=2) + "\n",
+        )
         write_text(out / "orfs.log", f"[mock] flow completed ({o.label})\n")
         return Status.PASS
 

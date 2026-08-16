@@ -54,12 +54,40 @@ export CORE_UTILIZATION   = 40
 export PLACE_DENSITY      = 0.60
 export CORE_ASPECT_RATIO  = 1
 
+# Logical-equivalence check disabled. ORFS defaults LEC_CHECK to 1 whenever
+# kepler-formal is present, and it is present in the image -- but that binary is
+# compiled with AVX-512, which this host CPU (i7-7700HQ, Kaby Lake) does not
+# implement. It dies with SIGILL and takes the CTS stage down with it. Nebula's
+# own equivalence checking is EQY at stage 60 and does not depend on this.
+export LEC_CHECK = 0
+
 # Output goes inside the Nebula run tree, not into the ORFS checkout, so a run
-# can be archived whole.
+# can be archived whole. ORFS derives results/, logs/, reports/ and objects/
+# beneath this.
 export WORK_HOME = {out_dir.as_posix()}
 """
     write_text(config_path, script)
     return script
+
+
+def metadata_path(config: ProjectConfiguration, out_dir: Path) -> Path:
+    """Where ORFS writes the metrics file for a run rooted at ``out_dir``.
+
+    Mirrors ``REPORTS_DIR`` from the flow's ``scripts/variables.mk``::
+
+        $(WORK_HOME)/reports/$(PLATFORM)/$(DESIGN_NICKNAME)/$(FLOW_VARIANT)
+
+    FLOW_VARIANT is left at its default of ``base``; Nebula distinguishes runs by
+    its own run directory, not by ORFS variants.
+    """
+    return (
+        out_dir
+        / "reports"
+        / config.platform.platform_id
+        / config.project_id
+        / "base"
+        / "metadata.json"
+    )
 
 
 def orfs_invocation(
@@ -84,11 +112,22 @@ def orfs_invocation(
         tool="orfs",
         # ORFS insists on an absolute DESIGN_CONFIG; this is the only place in
         # the codebase that absolutises a project path.
-        command=[binary, f"DESIGN_CONFIG={config_path.resolve().as_posix()}"],
+        #
+        # Two goals, in order: run the flow through route, then emit the metrics
+        # file. "metadata-generate" is used rather than the "metadata" target,
+        # because that one also runs metadata-check against a rules-base.json
+        # this project does not have -- a QoR regression gate belongs to
+        # policy.py, not to ORFS.
+        command=[
+            binary,
+            f"DESIGN_CONFIG={config_path.resolve().as_posix()}",
+            "finish",
+            "metadata-generate",
+        ],
         cwd=flow_dir,
         log_dir=out_dir,
         log_name="orfs",
         timeout_s=timeout_s or config.run_policy.timeout("orfs", 14400),
-        expected_outputs={"metadata": out_dir / "metadata-base.json"},
+        expected_outputs={"metadata": metadata_path(config, out_dir)},
         fixture_key="orfs",
     )
