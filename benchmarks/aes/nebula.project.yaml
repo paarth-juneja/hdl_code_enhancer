@@ -1,0 +1,137 @@
+# nebula.project.yaml -- ORFS "aes" benchmark (OpenCores AES-128).
+#
+# Second ingestion rehearsal. Unlike gcd, this is hand-written RTL across nine
+# files, which is the point: gcd.v is machine-generated and its debug metadata
+# may not be representative.
+#
+# From its config.mk: DESIGN_NAME = aes_cipher_top, PLATFORM = nangate45,
+# VERILOG_FILES = sorted wildcard of src/aes/*.v, clock period 0.82 ns.
+
+schema_version: "1.0.0"
+
+project_id: aes
+display_name: ORFS aes benchmark (OpenCores AES-128)
+
+design:
+  top_module: aes_cipher_top
+  rtl_dir: rtl
+  file_list:
+    - path: rtl/aes_cipher_top.v
+    - path: rtl/aes_inv_cipher_top.v
+    - path: rtl/aes_inv_sbox.v
+    - path: rtl/aes_key_expand_128.v
+    - path: rtl/aes_rcon.v
+    - path: rtl/aes_sbox.v
+    - path: rtl/timescale.v
+  include_dirs: []
+  defines: {}
+  parameters: {}
+
+constraints:
+  sdc_file: constraints/aes.sdc
+  # Two clocks, both at 0.46 ns. vclk_core_clock is a *virtual* clock -- created
+  # with no port, used only to constrain IO delay. Whether it shows up in
+  # all_clocks (and so in the inventory check) is one of the things this
+  # rehearsal is meant to establish.
+  clock_expectations:
+    - name: clk
+      type: master
+      period_ns: 0.82
+    - name: vclk_clk
+      type: virtual
+      period_ns: 0.82
+  asynchronous_groups: []
+
+# Shared with the main project; the platform symlinks live one level up.
+platform:
+  platform_id: nangate45
+  liberty: ../../platform/nangate45/NangateOpenCellLibrary_typical.lib
+  lef:
+    - ../../platform/nangate45/NangateOpenCellLibrary.tech.lef
+    - ../../platform/nangate45/NangateOpenCellLibrary.macro.lef
+  analysis_corners: [typical]
+
+toolchain:
+  tools:
+    yosys:
+      binary: /home/juneja/nebula/tools/bin/yosys
+    opensta:
+      binary: /home/juneja/nebula/tools/bin/sta
+    eqy:
+      binary: /home/juneja/nebula/tools/bin/eqy
+    orfs:
+      binary: /home/juneja/nebula/tools/bin/make
+      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+
+objective:
+  primary_metric: wns
+  direction: maximize
+  guardrails:
+    max_area_regression_pct: 5.0
+    max_cell_count_regression_pct: 5.0
+    latency_change_allowed: false
+    interface_change_allowed: false
+    clocks_must_be_preserved: true
+  tie_breakers: [cell_area, cell_count]
+
+run_policy:
+  max_iterations: 5
+  max_candidates: 10
+  approval_mode: auto
+  authoritative_stage: orfs
+  timeouts_s:
+    synth: 1800
+    sta: 900
+    screen: 1800
+    eqy: 3600
+    orfs: 14400
+
+transformations:
+  allowed:
+    - balanced_adder_tree
+    - mux_priority_to_parallel
+    - common_subexpression_extraction
+    - constant_folding
+    - operator_strength_reduction
+  forbidden:
+    - pipelining
+    - retiming
+    - clock_gating
+    - reset_restructuring
+    - cdc_modification
+    - interface_change
+  change_budget:
+    max_changed_lines: 40
+    max_changed_files: 2
+
+# Nothing is protected here: gcd has no clock generator or CDC logic, and the
+# whole design is a single file. On a design with either, those files would be
+# listed here before the model is ever shown the source.
+security:
+  model_data_policy: bounded_context_only
+  protected_paths: []
+  editable_paths:
+    - rtl/aes_cipher_top.v
+    - rtl/aes_inv_cipher_top.v
+    - rtl/aes_inv_sbox.v
+    - rtl/aes_key_expand_128.v
+    - rtl/aes_rcon.v
+    - rtl/aes_sbox.v
+    - rtl/timescale.v
+  redact_patterns: []
+
+equivalence:
+  relation: cycle_exact
+  gold_top: aes_cipher_top
+  gate_top: aes_cipher_top
+  reset_assumption: reset_sequence_identical
+  blackboxes: []
+
+llm:
+  propose_model: claude-opus-5
+  repair_model: claude-opus-5
+  narrate_model: claude-sonnet-5
+  max_output_tokens: 4096
+  temperature: 0.2
+  max_repairs_per_iteration: 1
+  prompt_version: "1.0.0"
