@@ -7,6 +7,8 @@ artifacts behind, then asserts the properties the design depends on:
 * rejected candidates keep their evidence, including the EQY counterexample;
 * the history ledger retains every attempt;
 * a protected-region patch is refused;
+* the clock inventory is checked against the manifest, not just against the
+  baseline, so a baseline that lost a clock cannot normalise the loss;
 * the manifest lock makes a mutated design non-comparable;
 * the ASM has no path from an unproven equivalence result to acceptance.
 """
@@ -19,7 +21,7 @@ from pathlib import Path
 import pytest
 
 from orchestrator.adapters.base import make_backend
-from orchestrator.config import load_project
+from orchestrator.config import check_clock_inventory, load_project
 from orchestrator.llm.client import make_llm_client
 from orchestrator.patcher import apply_patch
 from orchestrator.pipeline import optimize
@@ -112,6 +114,22 @@ def test_manifest_lock_detects_mutation(sandbox: Path):
     sdc.write_text(sdc.read_text() + "\n# tampered\n", encoding="utf-8")
     config_after = load_project(sandbox / "nebula.project.yaml")
     assert config_after.settings_hash() != before
+
+
+def test_clock_inventory_is_anchored_on_the_manifest(sandbox: Path):
+    config = load_project(sandbox / "nebula.project.yaml")
+    declared = [e.name for e in config.constraints.clock_expectations]
+    assert declared, "the fixture must declare clocks for this check to mean anything"
+
+    # The declared set is what a correct STA run produces.
+    assert check_clock_inventory(config, declared) == []
+
+    # A clock that failed to be created is caught even though a baseline missing
+    # it would otherwise look internally consistent to every candidate.
+    assert check_clock_inventory(config, declared[:-1])
+
+    # So is a clock the SDC created but the manifest never declared.
+    assert check_clock_inventory(config, declared + ["clk_undeclared"])
 
 
 def test_asm_has_no_unproven_acceptance():

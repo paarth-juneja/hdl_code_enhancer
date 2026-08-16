@@ -22,7 +22,11 @@ from orchestrator.adapters import opensta as sta_adapter
 from orchestrator.adapters import orfs as orfs_adapter
 from orchestrator.adapters import yosys as yosys_adapter
 from orchestrator.adapters.base import Backend
-from orchestrator.config import ProjectConfiguration, validate_inputs
+from orchestrator.config import (
+    ProjectConfiguration,
+    check_clock_inventory,
+    validate_inputs,
+)
 from orchestrator.history import HistoryLedger
 from orchestrator.llm.client import LLMClient
 from orchestrator.llm.request_builder import build_request
@@ -103,6 +107,18 @@ def run_baseline(
     backend.execute(sta_inv)
 
     timing, paths = parse_timing(sta_dir, workspace.run_id, "synth")
+
+    # Anchor the clock inventory on the manifest before anything is measured. A
+    # baseline missing a declared clock is not a worse baseline, it is an
+    # invalid one: every candidate would be compared against a timing
+    # environment that never existed, and the comparison would look clean.
+    clock_problems = check_clock_inventory(config, timing.clocks)
+    if clock_problems:
+        raise ValueError(
+            "baseline clock inventory does not match the manifest:\n  "
+            + "\n  ".join(clock_problems)
+        )
+
     qor = parse_synth_stat(synth_dir / "synth_stat.txt", workspace.run_id)
     workspace.save_json("parse", "timing_analysis.json", timing)
     workspace.save_json("parse", "qor.json", qor)

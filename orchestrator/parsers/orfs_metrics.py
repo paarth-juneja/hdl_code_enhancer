@@ -42,13 +42,27 @@ def parse_orfs_metrics(
         stage="orfs",
         cell_count=int(cell_count) if cell_count is not None else None,
         cell_area=Quantity(value=float(cell_area) if cell_area is not None else None, unit="um^2"),
-        power=Quantity(value=float(power) if power is not None else None, unit="mW"),
-        activity_source=None,  # no activity file supplied; power stays unsourced
+        # Power is dropped, not recorded. ORFS reports a number, but no switching
+        # activity was supplied, so it reflects default assumptions rather than
+        # this design's behaviour -- and QoRRecord's contract is that an
+        # unsourced power figure is not evidence. Carrying the value with
+        # activity_source=None would state the opposite of what it means.
+        # To make power real, supply a VCD/SAIF and set activity_source to it.
+        power=Quantity(value=None, unit="mW"),
+        activity_source=None,
         provenance=Provenance(
             produced_by="parsers.orfs_metrics",
             artifact_paths=[metadata_path.as_posix()],
         ),
     )
+
+    # A routed design reporting no constrained clocks means the timing numbers
+    # below describe nothing. That must be visible rather than read as "clean".
+    warnings: list[str] = []
+    if not clock_count:
+        warnings.append(
+            "ORFS reported 0 constrained clocks; timing figures are not evidence"
+        )
 
     timing = TimingAnalysisResult(
         analysis_id=f"{run_id}_orfs_sta",
@@ -56,10 +70,17 @@ def parse_orfs_metrics(
         stage="orfs",
         corner=corner,
         status=Status.PASS if wns is not None else Status.ERROR,
+        parser_warnings=warnings,
         wns=Quantity(value=float(wns) if wns is not None else None, unit="ns"),
         tns=Quantity(value=float(tns) if tns is not None else None, unit="ns"),
         violation_count=int(violations) if violations is not None else 0,
-        clocks=[f"clock_{i}" for i in range(int(clock_count))] if clock_count else [],
+        # Left empty on purpose. ORFS reports only a count, and inventing
+        # placeholder names from it ("clock_0", "clock_1") would put fabricated
+        # identifiers into a record that policy.py compares by name. The caller
+        # fills this from the STA clock inventory, where names actually exist.
+        # Note the count is not the SDC clock count: ORFS counts create_clock
+        # masters only, so this design's four clocks are reported as two.
+        clocks=[],
         provenance=Provenance(
             produced_by="parsers.orfs_metrics",
             artifact_paths=[metadata_path.as_posix()],

@@ -274,3 +274,47 @@ def validate_inputs(config: ProjectConfiguration) -> list[str]:
             problems.append(f"transformation '{name}' is both allowed and forbidden")
 
     return problems
+
+
+def check_clock_inventory(
+    config: ProjectConfiguration, observed: list[str]
+) -> list[str]:
+    """Compare the clocks STA actually found against the declared inventory.
+
+    ``constraints.clock_expectations`` is the manifest's statement of which
+    clocks this design has. Without checking it, the clock guardrail only
+    compares a candidate against a baseline -- so a baseline whose SDC silently
+    failed to create a clock would define the missing clock as normal, and every
+    candidate would agree with it. Anchoring on the declaration instead is what
+    makes "no clocks disappeared" a claim about the design rather than about two
+    runs that happen to match.
+
+    Only names are compared. Periods are deliberately not: OpenSTA derives a
+    generated clock's period rather than storing it, and reports 0 for
+    ``clk_a_div``/``clk_b_div``, so a period comparison would fail on correct
+    output. An empty ``clock_expectations`` disables the check.
+
+    Returns a list of problems; empty means the inventory matches.
+    """
+    declared = {entry.name for entry in config.constraints.clock_expectations}
+    if not declared:
+        return []
+
+    seen = set(observed)
+    problems: list[str] = []
+
+    missing = sorted(declared - seen)
+    if missing:
+        problems.append(
+            f"declared clock(s) absent from STA: {missing}; "
+            "the SDC did not create them, so their paths are unconstrained"
+        )
+
+    undeclared = sorted(seen - declared)
+    if undeclared:
+        problems.append(
+            f"STA found undeclared clock(s): {undeclared}; "
+            "add them to constraints.clock_expectations or remove them from the SDC"
+        )
+
+    return problems
