@@ -49,7 +49,8 @@ def build_eqy_script(
 # orchestrator/parsers/eqy_status.py and are never reported as PASS.
 
 [options]
-depth 10
+splitnets off
+insbuf on
 
 [gold]
 {gold_reads}
@@ -61,15 +62,19 @@ prep -top {top}
 prep -top {top}
 {blackbox_lines}
 
+# Strategies are tried in order per partition. Both use EQY's "sat" engine,
+# which runs Yosys's built-in SAT solver with temporal induction and needs no
+# external SMT binary -- the ORFS image ships none (no bitwuzla, yices, z3 or
+# boolector), so an SMT-based strategy would be unrunnable here. "depth" is a
+# per-strategy option; EQY's [options] section accepts only splitnets and
+# insbuf, and rejects anything else outright.
 [strategy simple]
 use sat
 depth 10
 
-[strategy fallback]
-use bitwuzla
-depth 20
-
-[recode]
+[strategy deep]
+use sat
+depth 25
 """
     write_text(script_path, script)
     return script
