@@ -57,6 +57,14 @@ class CriticalPathRecord(NebulaRecord):
     relationship: str = "same_domain"  # same_domain | cross_domain | io
     elements: list[PathElement] = Field(default_factory=list)
     logic_depth: int = 0
+    # Where the path begins and ends in RTL. These resolve far more often than
+    # the elements between them: endpoints are registers, which keep their src
+    # attribute through technology mapping, whereas abc strips it from the
+    # combinational cells in between. On real designs only 5-15% of cells retain
+    # src and none of those sit on the combinational path, so the endpoints are
+    # usually the only RTL anchor a path has.
+    startpoint_source: SourceLink | None = None
+    endpoint_source: SourceLink | None = None
     mapping_status: str = "unmapped"
     raw_report_span: tuple[int, int] | None = None
 
