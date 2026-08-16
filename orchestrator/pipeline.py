@@ -279,7 +279,18 @@ def _run_iteration(
     machine.advance("applied")                  # -> SCREEN
     printer(f"[iter {index}] {candidate_id}: {recommendation.transformation_type} applied")
 
-    candidate_files = sorted(cand_rtl.glob("*.v"))
+    # Declared order, not alphabetical. The baseline reads the manifest's
+    # file_list order and Yosys reads files as given, so globbing here made the
+    # candidate differ from the baseline in read order as well as in content --
+    # a second variable in a comparison that is supposed to have exactly one.
+    # The layout mirrors patcher.py, which writes each file_list entry into the
+    # candidate tree under its basename.
+    candidate_files = [cand_rtl / Path(rel).name for rel in config.rtl_relpaths()]
+    missing = [p.name for p in candidate_files if not p.exists()]
+    if missing:
+        return _reject(record, machine, ws, index, reason="patch_incomplete",
+                       detail=[f"candidate tree is missing declared RTL: {missing}"],
+                       printer=printer)
 
     # -- screen ------------------------------------------------------------
     _stage_backend_hook(backend, "screen", candidate_id)
