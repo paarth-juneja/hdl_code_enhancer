@@ -29,10 +29,33 @@ _CLOCK_RE = re.compile(r"^clock\s+(\S+)\s+period\s+([0-9.]+)", re.IGNORECASE | r
 # capture clocks that full_clock_expanded provides.
 _START_RE = re.compile(r"Startpoint:\s*(\S+)")
 _END_RE = re.compile(r"Endpoint:\s*(\S+)")
-_SLACK_RE = re.compile(r"slack\s*\(?(?:MET|VIOLATED)?\)?\s*(-?[0-9.]+)", re.IGNORECASE)
-_LAUNCH_RE = re.compile(r"launched by\s+(\S+)|clocked by\s+(\S+)", re.IGNORECASE)
-_ARRIVAL_RE = re.compile(r"data arrival time\s+(-?[0-9.]+)", re.IGNORECASE)
-_REQUIRED_RE = re.compile(r"data required time\s+(-?[0-9.]+)", re.IGNORECASE)
+#
+# OpenSTA writes the value BEFORE the label, right-aligned in a column:
+#
+#              0.4895   data required time
+#             -1.1489   data arrival time
+#     -----------------------------------------
+#             -0.6595   slack (VIOLATED)
+#
+# Synopsys tools write label-then-value and these patterns were built for that
+# shape, so slack never matched at all and arrival/required matched the number
+# on a neighbouring line -- reporting a clock edge as the arrival time. Anchored
+# to whole lines so a label can no longer reach across the separator into the
+# next row. None of this was visible until a design that actually violates
+# timing came along: a passing design reports no paths at all.
+_SLACK_RE = re.compile(
+    r"^\s*(-?[0-9.]+)\s+slack\s*(?:\((?:MET|VIOLATED)\))?\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+_ARRIVAL_RE = re.compile(
+    r"^\s*(-?[0-9.]+)\s+data arrival time\s*$", re.IGNORECASE | re.MULTILINE
+)
+_REQUIRED_RE = re.compile(
+    r"^\s*(-?[0-9.]+)\s+data required time\s*$", re.IGNORECASE | re.MULTILINE
+)
+# "... clocked by core_clock)" -- the name sits inside a parenthesised phrase,
+# so the closing paren must not be captured as part of the clock name.
+_LAUNCH_RE = re.compile(r"launched by\s+([^\s)]+)|clocked by\s+([^\s)]+)", re.IGNORECASE)
 # A path element row: "<incr> <cumulative> <dir> <pin> (<cell>)".
 _ELEM_RE = re.compile(
     r"^\s*(-?[0-9.]+)\s+(-?[0-9.]+)\s+[\^vru]?\s*([\w/.\[\]$:]+)\s*(?:\(([\w$]+)\))?",

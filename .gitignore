@@ -56,3 +56,8 @@ Desktop.ini
 *.swp
 *~
 .idea/
+
+# Benchmark run trees (same rule as the top-level /runs/).
+/benchmarks/*/runs/
+/benchmarks/*/candidates/
+/benchmarks/*/experiments/
