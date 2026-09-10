@@ -22,6 +22,9 @@ venv/
 env/
 ENV/
 
+# Local API credentials. Keep the example file tracked.
+.env
+
 # Test / type / lint caches
 .pytest_cache/
 .mypy_cache/

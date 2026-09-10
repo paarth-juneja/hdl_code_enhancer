@@ -20,10 +20,20 @@ Install the optional live-model clients inside the virtual environment:
 ./.venv/bin/pip install -r requirements-llm.txt
 ```
 
-For a Groq trial, export the key in the current terminal and run:
+Store a Groq key once in the repository's ignored `.env` file:
 
 ```bash
-export GROQ_API_KEY="..."
+read -rsp "Paste Groq API key: " key; echo
+printf 'GROQ_API_KEY=%s\n' "$key" > .env
+unset key
+chmod 600 .env
+```
+
+Nebula loads this file automatically, so future terminals do not need an
+`export`. The `.env` file is ignored by Git; `.env.example` documents the
+supported names without containing credentials. Then run:
+
+```bash
 ./.venv/bin/python -m orchestrator.cli \
   --project benchmarks/aes/nebula.project.yaml \
   optimize --backend real --llm groq --iterations 1

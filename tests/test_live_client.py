@@ -1,5 +1,6 @@
 """Live-client request contract without spending API tokens."""
 import json
+import os
 import pytest
 from types import SimpleNamespace
 
@@ -37,9 +38,10 @@ def test_schema_and_repair_context(monkeypatch):
 
 
 def test_missing_key_stops_before_baseline(monkeypatch, capsys):
-    from orchestrator.cli import main
+    import orchestrator.cli as cli
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    assert main(["--project", "nonexistent.yaml", "optimize", "--llm", "anthropic"]) == 2
+    monkeypatch.setattr(cli, "_load_local_env", lambda: None)
+    assert cli.main(["--project", "nonexistent.yaml", "optimize", "--llm", "anthropic"]) == 2
     assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
 
 
@@ -73,10 +75,27 @@ def test_groq_json_request_and_repair_context(monkeypatch):
 
 
 def test_missing_groq_key_stops_before_baseline(monkeypatch, capsys):
-    from orchestrator.cli import main
+    import orchestrator.cli as cli
     monkeypatch.delenv("GROQ_API_KEY", raising=False)
-    assert main(["--project", "nonexistent.yaml", "optimize", "--llm", "groq"]) == 2
+    monkeypatch.setattr(cli, "_load_local_env", lambda: None)
+    assert cli.main(["--project", "nonexistent.yaml", "optimize", "--llm", "groq"]) == 2
     assert "GROQ_API_KEY" in capsys.readouterr().err
+
+
+def test_local_env_loads_keys_without_overwriting_session(tmp_path, monkeypatch):
+    from orchestrator.cli import _load_local_env
+
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "# local credentials\nGROQ_API_KEY=from-file\nANTHROPIC_API_KEY='paid-key'\n"
+    )
+    monkeypatch.setenv("GROQ_API_KEY", "from-session")
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+
+    _load_local_env(env_file)
+
+    assert os.environ["GROQ_API_KEY"] == "from-session"
+    assert os.environ["ANTHROPIC_API_KEY"] == "paid-key"
 
 
 def test_bad_patch_response_gets_one_repair_before_rejection():

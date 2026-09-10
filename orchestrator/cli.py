@@ -27,6 +27,28 @@ from orchestrator.pipeline import optimize, run_baseline
 from orchestrator.schemas.common import read_json
 
 DEFAULT_MANIFEST = "nebula.project.yaml"
+LOCAL_ENV_KEYS = frozenset({"GROQ_API_KEY", "ANTHROPIC_API_KEY"})
+
+
+def _load_local_env(path: Path | None = None) -> None:
+    """Load supported API keys from the ignored repository-level .env file."""
+    env_path = path or (Path(__file__).resolve().parents[1] / ".env")
+    if not env_path.is_file():
+        return
+    for raw_line in env_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        key, value = line.split("=", 1)
+        key, value = key.strip(), value.strip()
+        if key not in LOCAL_ENV_KEYS or key in os.environ:
+            continue
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+        if value:
+            os.environ[key] = value
 
 
 def _load(args) -> "object":
@@ -62,6 +84,7 @@ def cmd_baseline(args) -> int:
 
 
 def cmd_optimize(args) -> int:
+    _load_local_env()
     if args.llm == "anthropic" and not os.environ.get("ANTHROPIC_API_KEY"):
         print("error: set ANTHROPIC_API_KEY before starting a live run", file=sys.stderr)
         return 2
