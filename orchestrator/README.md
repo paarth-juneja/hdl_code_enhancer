@@ -49,6 +49,12 @@ still match. This avoids repeating the long baseline route:
   --reuse-baseline benchmarks/aes/runs/20260910T184108Z_baseline
 ```
 
+If a reasoning model exhausts the manifest's response allowance before emitting
+its patch, increase only that run's allowance with
+`--max-output-tokens 4096`. Provider proposal or repair errors are retained as
+run evidence and consume one iteration; they do not terminate the remaining
+iteration budget.
+
 Use `--llm anthropic --model <model-name>` with `ANTHROPIC_API_KEY` to move to
 an Anthropic model later. `--model` also overrides the configured Groq model.
 Both providers run the same pipeline against Yosys, OpenSTA, EQY, and ORFS.

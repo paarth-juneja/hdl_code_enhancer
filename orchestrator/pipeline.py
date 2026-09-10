@@ -285,16 +285,37 @@ def _run_iteration(
     ws.save_json("ai", f"request_{index}.json", request)
 
     machine.advance("ok")            # BUILD_REQUEST -> LLM_PROPOSE
-    recommendation, raw = llm.propose(request)
+    try:
+        recommendation, raw = llm.propose(request)
+    except Exception as exc:
+        machine.advance("error")
+        detail = [_llm_error_detail(exc)]
+        ws.save_text("ai", f"error_{index}.txt", detail[0] + "\n")
+        return _reject(
+            record, machine, ws, index, reason="llm_proposal_failed",
+            detail=detail, printer=printer, advanced=True,
+        )
     ws.save_text("ai", f"response_raw_{index}.json", raw)
     machine.advance("responded")     # LLM_PROPOSE -> VALIDATE_RECOMMENDATION
 
     # -- validate (with one bounded repair) --------------------------------
     outcome = validate_recommendation(recommendation, request)
+    record.recommendation_id = recommendation.recommendation_id
+    record.transformation_type = recommendation.transformation_type
     if outcome.outcome == "repairable":
         printer(f"[iter {index}] repairing: {outcome.reasons}")
         machine.advance("repairable")           # -> LLM_REPAIR
-        recommendation, raw = llm.repair(request, "; ".join(outcome.reasons))
+        try:
+            recommendation, raw = llm.repair(request, "; ".join(outcome.reasons))
+        except Exception as exc:
+            machine.advance("error")
+            detail = [_llm_error_detail(exc)]
+            ws.save_json("ai", f"recommendation_{index}.json", recommendation)
+            ws.save_text("ai", f"error_{index}_repair.txt", detail[0] + "\n")
+            return _reject(
+                record, machine, ws, index, reason="llm_repair_failed",
+                detail=detail, printer=printer, advanced=True,
+            )
         ws.save_text("ai", f"response_raw_{index}_repair.json", raw)
         machine.advance("responded")            # -> VALIDATE_RECOMMENDATION
         outcome = validate_recommendation(recommendation, request, already_repaired=True)
@@ -482,6 +503,12 @@ def _delta_dict(baseline: BaselineResult, timing, qor) -> dict[str, float]:
     if baseline.qor.cell_area.value is not None and qor.cell_area.value is not None:
         out["cell_area"] = round(qor.cell_area.value - baseline.qor.cell_area.value, 6)
     return out
+
+
+def _llm_error_detail(exc: Exception) -> str:
+    """Bound an external-provider error before saving it as run evidence."""
+    message = " ".join(str(exc).split())
+    return f"{type(exc).__name__}: {message}"[:4000]
 
 
 def _reject(record, machine, ws, index, reason, detail, printer, advanced=False):

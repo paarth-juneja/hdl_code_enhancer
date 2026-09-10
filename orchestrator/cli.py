@@ -96,7 +96,7 @@ def cmd_optimize(args) -> int:
     llm = make_llm_client(
         args.llm,
         model=args.model or config.llm.propose_model,
-        max_output_tokens=config.llm.max_output_tokens,
+        max_output_tokens=args.max_output_tokens or config.llm.max_output_tokens,
         temperature=config.llm.temperature,
     )
     report = optimize(
@@ -158,6 +158,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_opt.add_argument(
         "--model",
         help="override the manifest's model name for the selected provider",
+    )
+    p_opt.add_argument(
+        "--max-output-tokens",
+        type=int,
+        help="override the manifest's response-token limit for this run",
     )
     p_opt.add_argument("--iterations", type=int, default=None)
     p_opt.add_argument(

@@ -22,7 +22,7 @@ import pytest
 
 from orchestrator.adapters.base import make_backend
 from orchestrator.config import check_clock_inventory, load_project
-from orchestrator.llm.client import make_llm_client
+from orchestrator.llm.client import LLMClient, make_llm_client
 from orchestrator.patcher import _Hunk, _apply_hunk, apply_patch
 from orchestrator.pipeline import optimize, run_baseline
 from orchestrator.schemas.ai import RTLPatch
@@ -107,6 +107,38 @@ def test_completed_baseline_can_be_reused(sandbox: Path):
     assert len(optimize_runs) == 1
     reference = (optimize_runs[0] / "baseline_reference.json").read_text()
     assert baseline.workspace.run_id in reference
+
+
+def test_llm_repair_error_is_recorded_and_next_iteration_runs(sandbox: Path):
+    class RepairFailureClient(LLMClient):
+        def propose(self, request):
+            from orchestrator.schemas.ai import AIRecommendation
+            recommendation = AIRecommendation(
+                recommendation_id=f"rec_{request.iteration}",
+                request_id=request.request_id,
+                transformation_type="balanced_adder_tree",
+                action="patch",
+                observation_refs=[request.critical_path.path_id],
+                patch=None,
+            )
+            return recommendation, recommendation.model_dump_json()
+
+        def repair(self, request, error):
+            raise RuntimeError("provider rejected structured output")
+
+    config = load_project(sandbox / "nebula.project.yaml")
+    report = optimize(
+        config,
+        make_backend("mock"),
+        RepairFailureClient(),
+        max_iterations=2,
+        printer=lambda *_: None,
+    )
+
+    assert len(report.iterations) == 2
+    assert all(r.failure_class.value == "SCHEMA_INVALID" for r in report.iterations)
+    errors = list(sandbox.glob("runs/*/40_ai/error_*_repair.txt"))
+    assert len(errors) == 2
 
 
 def test_protected_region_patch_is_refused(sandbox: Path):
