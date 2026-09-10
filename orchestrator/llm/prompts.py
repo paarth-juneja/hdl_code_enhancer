@@ -44,6 +44,13 @@ never in the rationale as if they were facts.
 """
 
 USER_TEMPLATE = """\
+## Exact response identifiers and patch rules
+- request_id must be exactly: {request_id}
+- observation_refs must contain exactly this raw path ID, without a label or prefix: {path_id}
+- A patch must use standard unified-diff text beginning with `--- a/<path>` and
+  `+++ b/<path>`. Do not use `*** Begin Patch` or `*** Update File` markers.
+- Patch paths and changed_files must exactly match a file path shown in RTL context.
+
 ## Timing facts (measured by tools -- treat as ground truth)
 {facts}
 
@@ -111,6 +118,8 @@ def render_user_prompt(request: AIOptimizationRequest) -> str:
         )
 
     return USER_TEMPLATE.format(
+        request_id=request.request_id,
+        path_id=(request.critical_path.path_id if request.critical_path else "none"),
         facts=json.dumps(request.facts, indent=2),
         path=path_text,
         rtl_context=context_text,

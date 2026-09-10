@@ -8,13 +8,14 @@ Commands::
 
     python -m orchestrator.cli validate  [--project nebula.project.yaml]
     python -m orchestrator.cli baseline  [--backend mock|real]
-    python -m orchestrator.cli optimize  [--backend ...] [--llm mock|anthropic] [--iterations N]
+    python -m orchestrator.cli optimize  [--backend ...] [--llm mock|anthropic|groq] [--iterations N]
     python -m orchestrator.cli report    [--project ...]
 """
 
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -61,15 +62,27 @@ def cmd_baseline(args) -> int:
 
 
 def cmd_optimize(args) -> int:
+    if args.llm == "anthropic" and not os.environ.get("ANTHROPIC_API_KEY"):
+        print("error: set ANTHROPIC_API_KEY before starting a live run", file=sys.stderr)
+        return 2
+    if args.llm == "groq" and not os.environ.get("GROQ_API_KEY"):
+        print("error: set GROQ_API_KEY before starting a live run", file=sys.stderr)
+        return 2
     config = _load(args)
     backend = make_backend(args.backend)
     llm = make_llm_client(
         args.llm,
-        model=config.llm.propose_model,
+        model=args.model or config.llm.propose_model,
         max_output_tokens=config.llm.max_output_tokens,
         temperature=config.llm.temperature,
     )
-    report = optimize(config, backend, llm, max_iterations=args.iterations)
+    report = optimize(
+        config,
+        backend,
+        llm,
+        max_iterations=args.iterations,
+        baseline_dir=Path(args.reuse_baseline) if args.reuse_baseline else None,
+    )
 
     print("\n=== summary ===")
     for record in report.iterations:
@@ -118,8 +131,17 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_opt = sub.add_parser("optimize", help="run the full optimization loop")
     p_opt.add_argument("--backend", choices=["mock", "real"], default="mock")
-    p_opt.add_argument("--llm", choices=["mock", "anthropic"], default="mock")
+    p_opt.add_argument("--llm", choices=["mock", "anthropic", "groq"], default="mock")
+    p_opt.add_argument(
+        "--model",
+        help="override the manifest's model name for the selected provider",
+    )
     p_opt.add_argument("--iterations", type=int, default=None)
+    p_opt.add_argument(
+        "--reuse-baseline",
+        metavar="RUN_DIR",
+        help="reuse a completed, settings-matched baseline run",
+    )
     p_opt.set_defaults(func=cmd_optimize)
 
     p_rep = sub.add_parser("report", help="print the experiment ledger")

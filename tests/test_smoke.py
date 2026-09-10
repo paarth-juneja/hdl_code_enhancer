@@ -23,8 +23,8 @@ import pytest
 from orchestrator.adapters.base import make_backend
 from orchestrator.config import check_clock_inventory, load_project
 from orchestrator.llm.client import make_llm_client
-from orchestrator.patcher import apply_patch
-from orchestrator.pipeline import optimize
+from orchestrator.patcher import _Hunk, _apply_hunk, apply_patch
+from orchestrator.pipeline import optimize, run_baseline
 from orchestrator.schemas.ai import RTLPatch
 from orchestrator.statemachine import assert_no_unproven_acceptance
 
@@ -60,6 +60,12 @@ def test_three_branches_and_evidence(sandbox: Path):
     assert verdicts[3] == ("REJECTED", "NOT_EQUIVALENT")
     assert report.accepted == ["cand_0001_08c412"]
 
+    request_files = list(sandbox.glob("runs/*/40_ai/request_1.json"))
+    assert len(request_files) == 1
+    import json
+    request = json.loads(request_files[0].read_text())
+    assert request["rtl_context"][0]["file"] == "rtl/dsp_core.v"
+
     # Rejected candidates keep their whole evidence tree.
     candidates = sandbox / "candidates"
     assert len(list(candidates.iterdir())) == 3
@@ -83,6 +89,26 @@ def test_history_retains_every_attempt(sandbox: Path):
     assert "NOT_EQUIVALENT" in failure_classes
 
 
+def test_completed_baseline_can_be_reused(sandbox: Path):
+    config = load_project(sandbox / "nebula.project.yaml")
+    baseline = run_baseline(config, make_backend("mock"), printer=lambda *_: None)
+
+    report = optimize(
+        config,
+        make_backend("mock"),
+        make_llm_client("mock"),
+        max_iterations=1,
+        baseline_dir=baseline.workspace.root,
+        printer=lambda *_: None,
+    )
+
+    assert report.baseline_run_id == baseline.workspace.run_id
+    optimize_runs = list((sandbox / "runs").glob("*_optimize"))
+    assert len(optimize_runs) == 1
+    reference = (optimize_runs[0] / "baseline_reference.json").read_text()
+    assert baseline.workspace.run_id in reference
+
+
 def test_protected_region_patch_is_refused(sandbox: Path):
     config = load_project(sandbox / "nebula.project.yaml")
     # A patch that edits the CDC synchronizer -- a protected file.
@@ -103,6 +129,16 @@ def test_protected_region_patch_is_refused(sandbox: Path):
     assert result.outcome == "protected"
     # No candidate tree may have been written.
     assert not (sandbox / "candidates" / "cand_bad" / "rtl").exists()
+
+
+def test_unique_hunk_match_tolerates_tabs_changed_to_spaces():
+    source = ["reg\t[7:0]\ta,b;", "assign x=a^b;"]
+    hunk = _Hunk(
+        file="rtl/example.v",
+        old_lines=[r"reg\t[7:0] a,b;", "assign x=a^b;"],
+        new_lines=["reg [7:0] a,b;", "assign x = a ^ b;"],
+    )
+    assert _apply_hunk(source, hunk) == [source[0], "assign x = a ^ b;"]
 
 
 def test_manifest_lock_detects_mutation(sandbox: Path):

@@ -28,8 +28,11 @@ from orchestrator.schemas.history import OptimizationIterationHistory
 from orchestrator.schemas.timing import CriticalPathRecord, TimingAnalysisResult
 from orchestrator.sourcemap import dominant_source
 
-#: Lines of RTL to include on each side of the targeted region.
-CONTEXT_MARGIN = 8
+#: Lines of RTL to include on each side of the targeted region. Eight lines was
+#: too narrow for real timing paths: it showed AES state-register assignments
+#: while hiding the combinational round logic that feeds them. This remains a
+#: bounded slice, but includes enough nearby logic to propose a grounded patch.
+CONTEXT_MARGIN = 80
 
 
 def _redact(text: str, patterns: list[str]) -> str:
@@ -39,7 +42,11 @@ def _redact(text: str, patterns: list[str]) -> str:
 
 
 def _slice_source(
-    file_path: Path, line_start: int, line_end: int, patterns: list[str]
+    file_path: Path,
+    line_start: int,
+    line_end: int,
+    patterns: list[str],
+    display_path: str | None = None,
 ) -> RTLContextSlice | None:
     if not file_path.exists():
         return None
@@ -48,7 +55,7 @@ def _slice_source(
     hi = min(len(lines), line_end + CONTEXT_MARGIN)
     body = "\n".join(lines[lo - 1 : hi])
     return RTLContextSlice(
-        file=file_path.name,
+        file=display_path or file_path.name,
         line_start=lo,
         line_end=hi,
         text=_redact(body, patterns),
@@ -89,11 +96,19 @@ def build_request(
     if worst is not None:
         link = dominant_source(worst)
         if link is not None and link.line_start is not None:
+            source_path = config.project_root / link.file
+            try:
+                display_path = source_path.resolve().relative_to(
+                    config.project_root.resolve()
+                ).as_posix()
+            except ValueError:
+                display_path = Path(link.file).as_posix()
             slice_ = _slice_source(
-                config.project_root / link.file,
+                source_path,
                 link.line_start,
                 link.line_end or link.line_start,
                 config.security.redact_patterns,
+                display_path,
             )
             if slice_ is not None:
                 rtl_context.append(slice_)

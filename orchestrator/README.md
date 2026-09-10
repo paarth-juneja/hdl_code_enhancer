@@ -14,10 +14,36 @@ python -m orchestrator.cli optimize --backend mock --llm mock --iterations 3
 python -m orchestrator.cli report
 ```
 
-On Linux with the toolchain installed, the same command with
-`--backend real --llm anthropic` runs the identical pipeline against Yosys,
-OpenSTA, EQY, and ORFS. Only execution changes; the generated `synth.ys`,
-`sta.tcl`, `equiv.eqy`, and `config.mk` are written by the same code either way.
+Install the optional live-model clients inside the virtual environment:
+
+```bash
+./.venv/bin/pip install -r requirements-llm.txt
+```
+
+For a Groq trial, export the key in the current terminal and run:
+
+```bash
+export GROQ_API_KEY="..."
+./.venv/bin/python -m orchestrator.cli \
+  --project benchmarks/aes/nebula.project.yaml \
+  optimize --backend real --llm groq --iterations 1
+```
+
+A completed physical baseline can be reused when its project and settings hash
+still match. This avoids repeating the long baseline route:
+
+```bash
+./.venv/bin/python -m orchestrator.cli \
+  --project benchmarks/aes/nebula.project.yaml \
+  optimize --backend real --llm groq --iterations 1 \
+  --reuse-baseline benchmarks/aes/runs/20260910T184108Z_baseline
+```
+
+Use `--llm anthropic --model <model-name>` with `ANTHROPIC_API_KEY` to move to
+an Anthropic model later. `--model` also overrides the configured Groq model.
+Both providers run the same pipeline against Yosys, OpenSTA, EQY, and ORFS.
+Only model execution changes; the generated `synth.ys`, `sta.tcl`, `equiv.eqy`,
+and `config.mk` are written by the same code either way.
 
 ## Layout
 
@@ -33,7 +59,7 @@ OpenSTA, EQY, and ORFS. Only execution changes; the generated `synth.ys`,
 | `adapters/` | script generators (`yosys`, `opensta`, `eqy`, `orfs`) + `mock` backend |
 | `parsers/` | typed views of tool output — the part that needs refitting on Linux |
 | `sourcemap.py` | netlist objects → RTL lines, with confidence |
-| `llm/` | request builder, prompts, client (mock + Anthropic), validator |
+| `llm/` | request builder, prompts, clients (mock, Anthropic, Groq), validator |
 | `patcher.py` | the six-check diff gate; writes isolated candidates |
 | `policy.py` | the acceptance policy — the only place a verdict is produced |
 | `history.py` | append-only ledger; keeps every attempt, detects cycles |

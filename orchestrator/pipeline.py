@@ -38,8 +38,9 @@ from orchestrator.parsers.yosys_json_src import build_source_index
 from orchestrator.parsers.yosys_stat import parse_synth_stat
 from orchestrator import policy as policy_engine
 from orchestrator.patcher import apply_patch
-from orchestrator.schemas.common import Status, Verdict, write_json
+from orchestrator.schemas.common import Status, Verdict, read_json, write_json
 from orchestrator.schemas.history import IterationRecord
+from orchestrator.schemas.timing import CriticalPathRecord, QoRRecord, TimingAnalysisResult
 from orchestrator.schemas.verification import EquivalenceRelation
 from orchestrator.sourcemap import build_source_map
 from orchestrator.statemachine import RunState, StateMachine
@@ -64,6 +65,7 @@ class BaselineResult:
     settings_hash: str
     orfs_timing: object = None
     orfs_qor: object = None
+    reference_run_id: str | None = None
 
 
 @dataclass
@@ -147,6 +149,55 @@ def run_baseline(
         workspace=workspace, timing=timing, paths=mapped, qor=qor,
         settings_hash=config.settings_hash(),
         orfs_timing=orfs_timing, orfs_qor=orfs_qor,
+        reference_run_id=workspace.run_id,
+    )
+
+
+def reuse_baseline(
+    config: ProjectConfiguration, run_dir: Path, backend: Backend, printer=print
+) -> BaselineResult:
+    """Load a completed baseline after verifying it matches this project."""
+    run_dir = run_dir.resolve()
+    manifest = read_json(run_dir / "run_manifest.json")
+    if manifest.get("project_id") != config.project_id:
+        raise ValueError(
+            f"baseline project is {manifest.get('project_id')!r}, expected {config.project_id!r}"
+        )
+    if manifest.get("settings_hash") != config.settings_hash():
+        raise ValueError("baseline settings hash does not match the current project")
+
+    timing = TimingAnalysisResult.model_validate(
+        read_json(run_dir / "30_parse" / "timing_analysis.json")
+    )
+    paths = [
+        CriticalPathRecord.model_validate(item)
+        for item in read_json(run_dir / "30_parse" / "critical_paths.json")
+    ]
+    qor = QoRRecord.model_validate(read_json(run_dir / "30_parse" / "qor.json"))
+    metadata = list((run_dir / "70_orfs").rglob("metadata.json"))
+    if len(metadata) != 1:
+        raise ValueError(
+            f"expected one ORFS metadata.json in {run_dir}, found {len(metadata)}"
+        )
+    orfs_qor, orfs_timing = parse_orfs_metrics(metadata[0], manifest["run_id"])
+    orfs_timing.clocks = timing.clocks
+
+    workspace = Workspace.create(config, backend=backend.name, label="optimize")
+    workspace.write_lock()
+    write_json(
+        workspace.root / "baseline_reference.json",
+        {"baseline_run_id": manifest["run_id"], "baseline_path": run_dir.as_posix()},
+    )
+    printer(f"[baseline] reusing {manifest['run_id']} (settings hash verified)")
+    return BaselineResult(
+        workspace=workspace,
+        timing=timing,
+        paths=paths,
+        qor=qor,
+        settings_hash=config.settings_hash(),
+        orfs_timing=orfs_timing,
+        orfs_qor=orfs_qor,
+        reference_run_id=manifest["run_id"],
     )
 
 
@@ -160,6 +211,7 @@ def optimize(
     backend: Backend,
     llm: LLMClient,
     max_iterations: int | None = None,
+    baseline_dir: Path | None = None,
     printer=print,
 ) -> LoopReport:
     """Run the full loop and return a summary."""
@@ -167,7 +219,11 @@ def optimize(
     if problems:
         raise ValueError("project failed validation:\n  " + "\n  ".join(problems))
 
-    baseline = run_baseline(config, backend, printer)
+    baseline = (
+        reuse_baseline(config, baseline_dir, backend, printer)
+        if baseline_dir is not None
+        else run_baseline(config, backend, printer)
+    )
     iterations = max_iterations or config.run_policy.max_iterations
 
     ledger = HistoryLedger.create(
@@ -177,7 +233,9 @@ def optimize(
         max_candidates=config.run_policy.max_candidates,
     )
 
-    report = LoopReport(baseline_run_id=baseline.workspace.run_id)
+    report = LoopReport(
+        baseline_run_id=baseline.reference_run_id or baseline.workspace.run_id
+    )
     machine = StateMachine(state=RunState.BUILD_REQUEST)
 
     for index in range(1, iterations + 1):
@@ -297,8 +355,27 @@ def _run_iteration(
     if hasattr(backend, "begin_candidate"):
         backend.begin_candidate(index)
     screen_synth = ws.stage_dir("synth", candidate_id)
-    backend.execute(yosys_adapter.synth_invocation(config, candidate_files, screen_synth,
-                                                    timeout_s=config.run_policy.timeout("screen")))
+    synth_proc = backend.execute(
+        yosys_adapter.synth_invocation(
+            config,
+            candidate_files,
+            screen_synth,
+            timeout_s=config.run_policy.timeout("screen"),
+        )
+    )
+    if synth_proc.status is not Status.PASS:
+        machine.advance("failed")
+        record.stage_statuses["screen"] = synth_proc.status.value
+        return _reject(
+            record,
+            machine,
+            ws,
+            index,
+            reason="synthesis_failed",
+            detail=[synth_proc.stderr_tail],
+            printer=printer,
+            advanced=True,
+        )
     screen_sta = ws.stage_dir("screen", candidate_id)
     backend.execute(sta_adapter.sta_invocation(config, screen_synth / "netlist.v", screen_sta))
     screen_timing, _ = parse_timing(screen_sta, ws.run_id, "screen")
@@ -366,7 +443,8 @@ def _run_iteration(
         baseline.timing.clocks, cand_timing.clocks,
     )
     comparison = policy_engine.evaluate(
-        config, baseline.workspace.run_id, ws.run_id, candidate_id,
+        config, baseline.reference_run_id or baseline.workspace.run_id,
+        ws.run_id, candidate_id,
         baseline.orfs_timing, cand_timing, baseline.orfs_qor, cand_qor,
         verification, config_equiv,
     )

@@ -2,8 +2,9 @@
 
 Two implementations behind one interface:
 
-* :class:`AnthropicClient` — the real call, using structured output and a single
-  bounded repair. Requires the SDK and an API key.
+* :class:`AnthropicClient` and :class:`GroqClient` — real calls, using
+  structured output and a single bounded repair. Each requires its SDK and API
+  key.
 * :class:`MockLLMClient` — returns scripted, schema-valid recommendations so the
   loop runs with no key and no network. Its patches are genuine cycle-exact
   transformations of the truth fixture, so the patcher and formal stages get
@@ -237,6 +238,7 @@ class AnthropicClient(LLMClient):
     model: str = "claude-opus-5"
     max_output_tokens: int = 4096
     temperature: float = 0.2
+    _last_raw: str = field(default="", init=False, repr=False)
 
     def _call(self, system: str, user: str) -> tuple[dict, str]:
         try:
@@ -247,15 +249,17 @@ class AnthropicClient(LLMClient):
                 "install it or run with --llm mock"
             ) from exc
 
-        client = anthropic.Anthropic()
+        client = anthropic.Anthropic(timeout=120.0, max_retries=0)
         message = client.messages.create(
             model=self.model,
             max_tokens=self.max_output_tokens,
-            temperature=self.temperature,
-            system=system,
+            system=system + "\n\nRequired JSON schema:\n" + json.dumps(
+                AIRecommendation.model_json_schema()
+            ),
             messages=[{"role": "user", "content": user}],
         )
         raw = "".join(block.text for block in message.content if block.type == "text")
+        self._last_raw = raw
         payload = _extract_json(raw)
         return payload, raw
 
@@ -266,11 +270,68 @@ class AnthropicClient(LLMClient):
 
     def repair(
         self, request: AIOptimizationRequest, error: str
-    ) -> tuple[AIRecommendation, str]:  # pragma: no cover - real path
-        payload, raw = self._call(SYSTEM_PROMPT, REPAIR_TEMPLATE.format(error=error))
-        rec = _payload_to_recommendation(payload, request)
-        return rec, raw
+    ) -> tuple[AIRecommendation, str]:  # pragma: no cover - live path
+        payload, raw = self._call(
+            SYSTEM_PROMPT,
+            render_user_prompt(request)
+            + "\n\nPrevious response:\n" + self._last_raw
+            + "\n\n" + REPAIR_TEMPLATE.format(error=error),
+        )
+        return _payload_to_recommendation(payload, request), raw
 
+
+@dataclass
+class GroqClient(LLMClient):
+    """GroqCloud client for free-tier trials with schema-guided JSON output."""
+
+    model: str = "openai/gpt-oss-120b"
+    max_output_tokens: int = 4096
+    temperature: float = 0.2
+    _last_raw: str = field(default="", init=False, repr=False)
+
+    def _call(self, system: str, user: str) -> tuple[dict, str]:
+        try:
+            from groq import Groq
+        except ImportError as exc:  # pragma: no cover - only on real path
+            raise RuntimeError(
+                "the groq SDK is required for --llm groq; install "
+                "requirements-llm.txt or run with --llm mock"
+            ) from exc
+
+        client = Groq(timeout=120.0, max_retries=2)
+        response = client.chat.completions.create(
+            model=self.model,
+            max_completion_tokens=self.max_output_tokens,
+            temperature=self.temperature,
+            messages=[
+                {
+                    "role": "system",
+                    "content": system + "\n\nRequired JSON schema:\n" + json.dumps(
+                        AIRecommendation.model_json_schema()
+                    ),
+                },
+                {"role": "user", "content": user},
+            ],
+            response_format={"type": "json_object"},
+        )
+        raw = response.choices[0].message.content or ""
+        self._last_raw = raw
+        return _extract_json(raw), raw
+
+    def propose(self, request: AIOptimizationRequest) -> tuple[AIRecommendation, str]:
+        payload, raw = self._call(SYSTEM_PROMPT, render_user_prompt(request))
+        return _payload_to_recommendation(payload, request), raw
+
+    def repair(
+        self, request: AIOptimizationRequest, error: str
+    ) -> tuple[AIRecommendation, str]:  # pragma: no cover - live path
+        payload, raw = self._call(
+            SYSTEM_PROMPT,
+            render_user_prompt(request)
+            + "\n\nPrevious response:\n" + self._last_raw
+            + "\n\n" + REPAIR_TEMPLATE.format(error=error),
+        )
+        return _payload_to_recommendation(payload, request), raw
 
 def _extract_json(text: str) -> dict:
     start = text.find("{")
@@ -289,7 +350,7 @@ def _payload_to_recommendation(
 
 
 def make_llm_client(name: str, **kwargs) -> LLMClient:
-    """Construct a client by name: ``mock`` or ``anthropic``."""
+    """Construct a model client by provider name."""
     if name == "mock":
         return MockLLMClient()
     if name == "anthropic":
@@ -298,4 +359,12 @@ def make_llm_client(name: str, **kwargs) -> LLMClient:
             max_output_tokens=kwargs.get("max_output_tokens", 4096),
             temperature=kwargs.get("temperature", 0.2),
         )
-    raise ValueError(f"unknown llm client '{name}' (expected 'mock' or 'anthropic')")
+    if name == "groq":
+        return GroqClient(
+            model=kwargs.get("model", "openai/gpt-oss-120b"),
+            max_output_tokens=kwargs.get("max_output_tokens", 4096),
+            temperature=kwargs.get("temperature", 0.2),
+        )
+    raise ValueError(
+        f"unknown llm client '{name}' (expected 'mock', 'anthropic', or 'groq')"
+    )

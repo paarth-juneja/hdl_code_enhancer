@@ -119,10 +119,11 @@ equivalence:
   blackboxes: []
 
 llm:
-  propose_model: claude-opus-5
-  repair_model: claude-opus-5
-  narrate_model: claude-sonnet-5
-  max_output_tokens: 4096
+  propose_model: openai/gpt-oss-120b
+  repair_model: openai/gpt-oss-120b
+  narrate_model: openai/gpt-oss-120b
+  # Keep one free-tier request below Groq's 8K tokens/minute allowance.
+  max_output_tokens: 2048
   temperature: 0.2
   max_repairs_per_iteration: 1
   prompt_version: "1.0.0"

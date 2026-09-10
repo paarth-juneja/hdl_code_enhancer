@@ -16,6 +16,7 @@ The outcome tells the state machine which edge to take.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import re
 
 from orchestrator.schemas.ai import ActionKind, AIOptimizationRequest, AIRecommendation
 
@@ -53,20 +54,47 @@ def validate_recommendation(
 
     reasons: list[str] = []
 
+    if recommendation.request_id != request.request_id:
+        reasons.append(
+            f"request_id must be exactly '{request.request_id}', got "
+            f"'{recommendation.request_id}'"
+        )
+
     # A patch action must carry a patch.
     if recommendation.action is ActionKind.PATCH and recommendation.patch is None:
         reasons.append("action is 'patch' but no patch object was supplied")
+    elif recommendation.patch is not None:
+        diff_files = re.findall(
+            r"^\+\+\+ b/(.+)$", recommendation.patch.diff_text, flags=re.MULTILINE
+        )
+        context_files = {item.file for item in request.rtl_context}
+        if not diff_files:
+            reasons.append(
+                "patch.diff_text must contain a standard '+++ b/<path>' unified-diff header"
+            )
+        elif any(path not in context_files for path in diff_files):
+            reasons.append(
+                f"patch paths must exactly match an RTL context path {sorted(context_files)}; "
+                f"got {diff_files}"
+            )
+        declared_files = set(recommendation.patch.changed_files)
+        if declared_files and declared_files != set(diff_files):
+            reasons.append(
+                f"patch.changed_files must match its diff paths {diff_files}; "
+                f"got {sorted(declared_files)}"
+            )
 
     # Ground every cited observation in the request. A citation the request never
     # provided is a fabricated fact.
     available_ids = set()
     if request.critical_path is not None:
         available_ids.add(request.critical_path.path_id)
+    ungrounded: list[str] = []
     for ref in recommendation.observation_refs:
         if ref not in available_ids:
-            return ValidationOutcome(
-                "ungrounded",
-                [f"observation_ref '{ref}' was not supplied in the request"],
+            ungrounded.append(
+                f"observation_ref '{ref}' was not supplied in the request; "
+                f"use exactly one of {sorted(available_ids)}"
             )
 
     # Transformation must be permitted.
@@ -86,8 +114,11 @@ def validate_recommendation(
                 f"far over the budget of {max_lines}"
             )
 
+    reasons.extend(ungrounded)
     if reasons:
         # A structural problem is repairable once; after that it is invalid.
-        return ValidationOutcome("invalid" if already_repaired else "repairable", reasons)
+        if not already_repaired:
+            return ValidationOutcome("repairable", reasons)
+        return ValidationOutcome("ungrounded" if ungrounded else "invalid", reasons)
 
     return ValidationOutcome("valid")

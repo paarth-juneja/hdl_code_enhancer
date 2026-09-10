@@ -98,7 +98,7 @@ def _parse_diff(diff_text: str) -> list[_Hunk]:
 
 
 def _apply_hunk(source_lines: list[str], hunk: _Hunk) -> list[str] | None:
-    """Replace the first exact occurrence of ``hunk.old_lines``. None on miss."""
+    """Replace one matching occurrence of ``hunk.old_lines``. None on ambiguity."""
     old = hunk.old_lines
     if not old:
         return source_lines
@@ -106,6 +106,39 @@ def _apply_hunk(source_lines: list[str], hunk: _Hunk) -> list[str] | None:
     for i in range(len(source_lines) - n + 1):
         if source_lines[i : i + n] == old:
             return source_lines[:i] + hunk.new_lines + source_lines[i + n :]
+
+    # Models sometimes reproduce an unchanged context line with tabs converted
+    # to spaces. Permit that formatting drift only when the complete old hunk
+    # has exactly one whitespace-normalised match. Requiring uniqueness avoids
+    # applying a short generic hunk to the wrong block.
+    def normalise(line: str) -> str:
+        # JSON-producing models occasionally double-escape a tab inside the
+        # diff, leaving the two visible characters ``\t`` in the parsed string.
+        line = line.replace("\\t", " ")
+        return re.sub(r"[ \t]+", " ", line.strip())
+
+    wanted = [normalise(line) for line in old]
+    matches = [
+        i
+        for i in range(len(source_lines) - n + 1)
+        if [normalise(line) for line in source_lines[i : i + n]] == wanted
+    ]
+    if len(matches) == 1:
+        i = matches[0]
+        matched_source = source_lines[i : i + n]
+        resolved_new: list[str] = []
+        for line in hunk.new_lines:
+            old_matches = [
+                j for j, old_line in enumerate(old)
+                if normalise(old_line) == normalise(line)
+            ]
+            # Preserve the source byte-for-byte for an unchanged context line.
+            # This prevents a model's escaped tabs or indentation drift from
+            # being written into otherwise untouched RTL.
+            resolved_new.append(
+                matched_source[old_matches[0]] if len(old_matches) == 1 else line
+            )
+        return source_lines[:i] + resolved_new + source_lines[i + n :]
     return None
 
 
