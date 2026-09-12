@@ -1,6 +1,6 @@
 # Nebula project memory
 
-Last updated: 16 August 2026
+Last updated: 12 September 2026
 
 Purpose: this is a compact, living record of the decisions and next actions discussed for the Nebula RTL optimization project. Update it whenever the architecture, environment, constraints, or implementation status changes.
 
@@ -342,9 +342,9 @@ The schema must also distinguish synthesis failure, missing or unconstrained tim
 
 Do not train a custom RTL-generation model initially. Use an existing LLM for candidate proposals and deterministic rules for scoring and validation. Accumulate structured attempt history first. A later lightweight model can rank candidates or predict which transformations are worth expensive physical runs.
 
-## Immediate next milestone
+## Historical milestone checklist (completed)
 
-Status as of 16 August 2026 — steps 1 to 5 are done on real tools:
+This was the 16 August 2026 checklist; all six steps are now complete:
 
 1. ~~Verify Docker.~~ Done.
 2. ~~Run the default ORFS example.~~ Done (needs `LEC_CHECK=0` on this CPU).
@@ -353,13 +353,33 @@ Status as of 16 August 2026 — steps 1 to 5 are done on real tools:
    against genuine tool output.
 5. ~~Apply one manual cycle-exact refactor.~~ Done — balanced adder tree in `dsp_core.v`,
    proved equivalent, with a broken variant correctly disproved as a control.
-6. **Produce an honest before/after comparison — the remaining step.** The refactor has been
-   proved equivalent but has *not* yet been pushed through ORFS and compared post-route to
-   post-route against the 2260-cell / 1778.21 um^2 / +2.91261 ns baseline. Until that runs,
-   there is no measured QoR claim for it, only a correctness claim.
+6. ~~Produce an honest before/after comparison.~~ Done in the later real-tool loop;
+   candidates are compared post-route to post-route against a reusable, settings-hash-
+   verified baseline.
 
-Only after step 6 should the LLM be connected. The whole point of the ordering is that the
-model is given a loop that already measures honestly.
+The LLM was connected only after this checklist completed, so it is operating inside a
+loop that already measures candidate QoR and proves equivalence independently.
+
+### Subsequent progress through 12 September 2026
+
+- The honest post-route comparison, reusable baselines, real EQY/ORFS loop, GCD
+  and AES ingestion, live Groq/Anthropic clients, and provider-error retention
+  are implemented in commits after this original milestone list.
+- Bounded multi-module context is now implemented. The request builder resolves
+  critical-path source anchors to modules, scans declared RTL for named module
+  instantiations and port directions, and supplies the smallest directly
+  connected context allowed by `max_changed_files`.
+- `AIOptimizationRequest.connection_map` explicitly records parent/child files,
+  instances, port expressions, direction, and missing-port evidence. Related
+  protected or non-editable source is marked read-only.
+- The recommendation validator accepts a multi-file patch only when every path
+  is editable and all changed files form one component in the complete supplied
+  connection map. The patcher still independently enforces its file, protected
+  path, and line-count gates.
+- Verification: 21 tests pass, the complete mock loop accepts its known-good
+  candidate, and a two-file candidate was proved cycle-exact by real EQY across
+  the complete truth-fixture design (`PASS`, 2 seconds). The next milestone is
+  a live multi-module trial against the reusable AES baseline.
 
 ## File workflow and orchestrator (frozen 8 August 2026)
 
@@ -408,4 +428,3 @@ Key decisions baked in:
 - [OpenSTA repository and interface documentation](https://github.com/The-OpenROAD-Project/OpenSTA)
 - [EQY getting started](https://yosyshq.readthedocs.io/projects/eqy/en/latest/quickstart.html)
 - [Local project development guide](./Nebula_project_development_guide.md)
-

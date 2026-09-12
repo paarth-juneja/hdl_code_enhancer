@@ -15,14 +15,14 @@ import json
 
 from orchestrator.schemas.ai import AIOptimizationRequest
 
-PROMPT_VERSION = "1.0.0"
+PROMPT_VERSION = "1.1.0"
 
 SYSTEM_PROMPT = """\
 You are a hardware RTL optimization assistant operating inside a tool-grounded
 system called Nebula. Your role is strictly bounded.
 
 You MAY:
-- Read the single critical timing path and the bounded RTL slice you are given.
+- Read the single critical timing path, bounded RTL slices, and connection map you are given.
 - Propose ONE small, equivalence-preserving RTL transformation as a unified diff.
 - Decline (action "abstain") when no safe change is available.
 
@@ -30,7 +30,7 @@ You MAY NOT:
 - Claim any change succeeded. You never see measurements and never set a verdict.
 - Touch clock generation, reset, clock-domain-crossing, or interface logic.
 - Change latency, add or remove pipeline stages, or alter cycle behaviour.
-- Exceed the stated change budget or edit any file outside the allowlist.
+- Exceed the stated change budget or edit a context marked read-only.
 
 Every change you propose must be provably equivalent to the original under a
 cycle-exact relation. If you are not confident a change is cycle-exact, abstain.
@@ -49,7 +49,9 @@ USER_TEMPLATE = """\
 - observation_refs must contain exactly this raw path ID, without a label or prefix: {path_id}
 - A patch must use standard unified-diff text beginning with `--- a/<path>` and
   `+++ b/<path>`. Do not use `*** Begin Patch` or `*** Update File` markers.
-- Patch paths and changed_files must exactly match a file path shown in RTL context.
+- Patch paths and changed_files must exactly match RTL contexts marked editable.
+- A patch spanning multiple files is allowed only when the supplied complete
+  connection map directly or transitively connects every changed file.
 
 ## Timing facts (measured by tools -- treat as ground truth)
 {facts}
@@ -57,8 +59,11 @@ USER_TEMPLATE = """\
 ## Critical path
 {path}
 
-## RTL context (the only source you may edit)
+## RTL context (edit only blocks explicitly marked editable)
 {rtl_context}
+
+## Module connection map
+{connection_map}
 
 ## Invariants that must hold
 {invariants}
@@ -104,10 +109,19 @@ def render_user_prompt(request: AIOptimizationRequest) -> str:
     context_text = "none"
     if request.rtl_context:
         blocks = [
-            f"--- {c.file}:{c.line_start}-{c.line_end} ---\n{c.text}"
+            f"--- {c.file}:{c.line_start}-{c.line_end} "
+            f"module={c.module or 'unknown'} "
+            f"access={'editable' if c.editable else 'read-only'} ---\n{c.text}"
             for c in request.rtl_context
         ]
         context_text = "\n\n".join(blocks)
+
+    connection_text = "none"
+    if request.connection_map:
+        connection_text = json.dumps(
+            [edge.model_dump(mode="json") for edge in request.connection_map],
+            indent=2,
+        )
 
     previous_text = "none"
     if request.previous_attempts:
@@ -123,6 +137,7 @@ def render_user_prompt(request: AIOptimizationRequest) -> str:
         facts=json.dumps(request.facts, indent=2),
         path=path_text,
         rtl_context=context_text,
+        connection_map=connection_text,
         invariants=json.dumps(request.invariants, indent=2),
         allowed=", ".join(request.allowed_transformations),
         forbidden=", ".join(request.forbidden_changes),

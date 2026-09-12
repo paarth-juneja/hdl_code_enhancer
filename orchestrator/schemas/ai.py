@@ -37,6 +37,30 @@ class RTLContextSlice(BaseModel):
     line_end: int
     text: str
     role: str = "critical_path_source"
+    module: str | None = None
+    editable: bool = True
+
+
+class PortConnection(BaseModel):
+    """One named child port connected to an expression in its parent module."""
+
+    port: str
+    signal: str
+    direction: str = "unknown"  # parent_to_child | child_to_parent | inout | unknown
+
+
+class ModuleConnection(BaseModel):
+    """A bounded, source-grounded edge in the RTL instance hierarchy."""
+
+    parent_module: str
+    parent_file: str
+    child_module: str
+    child_file: str
+    instance: str
+    line: int
+    ports: list[PortConnection] = Field(default_factory=list)
+    unconnected_ports: list[str] = Field(default_factory=list)
+    complete: bool = True
 
 
 class PreviousAttempt(BaseModel):
@@ -64,6 +88,7 @@ class AIOptimizationRequest(NebulaRecord):
     facts: dict[str, object] = Field(default_factory=dict)
     critical_path: CriticalPathRecord | None = None
     rtl_context: list[RTLContextSlice] = Field(default_factory=list)
+    connection_map: list[ModuleConnection] = Field(default_factory=list)
     invariants: dict[str, str] = Field(default_factory=dict)
     allowed_transformations: list[str] = Field(default_factory=list)
     forbidden_changes: list[str] = Field(default_factory=list)

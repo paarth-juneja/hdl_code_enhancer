@@ -21,11 +21,13 @@ from pathlib import Path
 from orchestrator.config import ProjectConfiguration
 from orchestrator.schemas.ai import (
     AIOptimizationRequest,
+    ModuleConnection,
     PreviousAttempt,
     RTLContextSlice,
 )
 from orchestrator.schemas.history import OptimizationIterationHistory
 from orchestrator.schemas.timing import CriticalPathRecord, TimingAnalysisResult
+from orchestrator.rtl_hierarchy import RTLHierarchy, RTLModule, build_rtl_hierarchy
 from orchestrator.sourcemap import dominant_source
 
 #: Lines of RTL to include on each side of the targeted region. Eight lines was
@@ -47,6 +49,10 @@ def _slice_source(
     line_end: int,
     patterns: list[str],
     display_path: str | None = None,
+    *,
+    role: str = "critical_path_source",
+    module: str | None = None,
+    editable: bool = True,
 ) -> RTLContextSlice | None:
     if not file_path.exists():
         return None
@@ -59,8 +65,129 @@ def _slice_source(
         line_start=lo,
         line_end=hi,
         text=_redact(body, patterns),
-        role="critical_path_source",
+        role=role,
+        module=module,
+        editable=editable,
     )
+
+
+def _display_path(config: ProjectConfiguration, file: str) -> str:
+    path = Path(file)
+    if not path.is_absolute():
+        path = config.project_root / path
+    try:
+        return path.resolve().relative_to(config.project_root.resolve()).as_posix()
+    except ValueError:
+        return Path(file).as_posix()
+
+
+def _path_modules(
+    config: ProjectConfiguration,
+    hierarchy: RTLHierarchy,
+    path: CriticalPathRecord,
+) -> list[RTLModule]:
+    """Resolve the path's source anchors to modules, preserving usefulness order."""
+    links = [dominant_source(path), path.endpoint_source, path.startpoint_source]
+    links.extend(element.source_link for element in path.elements)
+    result: list[RTLModule] = []
+    seen: set[str] = set()
+    for link in links:
+        if link is None:
+            continue
+        module = hierarchy.module_at(
+            _display_path(config, link.file), link.line_start
+        )
+        if module is not None and module.name not in seen:
+            seen.add(module.name)
+            result.append(module)
+    return result
+
+
+def _bounded_hierarchy_context(
+    config: ProjectConfiguration,
+    path: CriticalPathRecord,
+) -> tuple[list[RTLContextSlice], list[ModuleConnection]]:
+    """Select path modules and direct neighbours within the configured file cap."""
+    hierarchy = build_rtl_hierarchy(config)
+    seeds = _path_modules(config, hierarchy, path)
+    if not seeds:
+        return [], []
+
+    max_files = max(1, config.transformations.change_budget.max_changed_files)
+    selected: list[RTLModule] = []
+    selected_names: set[str] = set()
+    selected_files: set[str] = set()
+
+    def add(module: RTLModule) -> bool:
+        new_file = module.file not in selected_files
+        if new_file and len(selected_files) >= max_files:
+            return False
+        if module.name not in selected_names:
+            selected.append(module)
+            selected_names.add(module.name)
+            selected_files.add(module.file)
+        return True
+
+    for module in seeds:
+        add(module)
+
+    # A timing anchor normally identifies only an endpoint register. Add its
+    # immediate producer/consumer module so the model can see the interface
+    # that constrains a safe cross-module rewrite.
+    for seed in list(selected):
+        for edge in hierarchy.connections:
+            neighbour = None
+            if edge.parent_module == seed.name:
+                neighbour = hierarchy.modules.get(edge.child_module)
+            elif edge.child_module == seed.name:
+                neighbour = hierarchy.modules.get(edge.parent_module)
+            if neighbour is not None:
+                add(neighbour)
+
+    selected_edges = [
+        edge for edge in hierarchy.connections
+        if edge.parent_module in selected_names and edge.child_module in selected_names
+    ]
+    edge_lines: dict[str, list[int]] = {}
+    for edge in selected_edges:
+        edge_lines.setdefault(edge.parent_module, []).append(edge.line)
+
+    seed_names = {module.name for module in seeds}
+    contexts: list[RTLContextSlice] = []
+    dominant = dominant_source(path)
+    for module in selected:
+        line_start = module.line_start
+        line_end = module.line_start
+        role = "hierarchy_context"
+        if module.name in seed_names:
+            role = "critical_path_source"
+            matching_links = [
+                link for link in (dominant, path.endpoint_source, path.startpoint_source)
+                if link is not None
+                and hierarchy.module_at(
+                    _display_path(config, link.file), link.line_start
+                ) is module
+            ]
+            if matching_links:
+                line_start = min(link.line_start or module.line_start for link in matching_links)
+                line_end = max(link.line_end or line_start for link in matching_links)
+        elif edge_lines.get(module.name):
+            line_start = min(edge_lines[module.name])
+            line_end = max(edge_lines[module.name])
+
+        context = _slice_source(
+            config.resolve(module.file),
+            line_start,
+            line_end,
+            config.security.redact_patterns,
+            module.file,
+            role=role,
+            module=module.name,
+            editable=config.is_editable(module.file) and not config.is_protected(module.file),
+        )
+        if context is not None:
+            contexts.append(context)
+    return contexts, selected_edges
 
 
 def _previous_attempts(history: OptimizationIterationHistory) -> list[PreviousAttempt]:
@@ -93,22 +220,25 @@ def build_request(
     worst = paths[0] if paths else None
 
     rtl_context: list[RTLContextSlice] = []
+    connection_map = []
     if worst is not None:
+        rtl_context, connection_map = _bounded_hierarchy_context(config, worst)
+        # Keep the old single-slice behaviour as an honest fallback for syntax
+        # the lightweight hierarchy scanner cannot resolve.
         link = dominant_source(worst)
-        if link is not None and link.line_start is not None:
-            source_path = config.project_root / link.file
-            try:
-                display_path = source_path.resolve().relative_to(
-                    config.project_root.resolve()
-                ).as_posix()
-            except ValueError:
-                display_path = Path(link.file).as_posix()
+        if not rtl_context and link is not None and link.line_start is not None:
+            source_path = Path(link.file)
+            if not source_path.is_absolute():
+                source_path = config.project_root / source_path
+            display_path = _display_path(config, link.file)
             slice_ = _slice_source(
                 source_path,
                 link.line_start,
                 link.line_end or link.line_start,
                 config.security.redact_patterns,
                 display_path,
+                editable=config.is_editable(display_path)
+                and not config.is_protected(display_path),
             )
             if slice_ is not None:
                 rtl_context.append(slice_)
@@ -138,6 +268,7 @@ def build_request(
         facts=facts,
         critical_path=worst,
         rtl_context=rtl_context,
+        connection_map=connection_map,
         invariants={
             "interfaces": "unchanged",
             "latency": "unchanged",

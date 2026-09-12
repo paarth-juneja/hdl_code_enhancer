@@ -67,7 +67,7 @@ def validate_recommendation(
         diff_files = re.findall(
             r"^\+\+\+ b/(.+)$", recommendation.patch.diff_text, flags=re.MULTILINE
         )
-        context_files = {item.file for item in request.rtl_context}
+        context_files = {item.file for item in request.rtl_context if item.editable}
         if not diff_files:
             reasons.append(
                 "patch.diff_text must contain a standard '+++ b/<path>' unified-diff header"
@@ -82,6 +82,18 @@ def validate_recommendation(
             reasons.append(
                 f"patch.changed_files must match its diff paths {diff_files}; "
                 f"got {sorted(declared_files)}"
+            )
+        max_files = request.change_budget.get("max_changed_files", 1)
+        if len(set(diff_files)) > max_files:
+            reasons.append(
+                f"patch changes {len(set(diff_files))} files, over the budget of {max_files}"
+            )
+        if len(set(diff_files)) > 1 and not _files_connected(
+            set(diff_files), request
+        ):
+            reasons.append(
+                "multi-file patch paths must form one connected component in the "
+                "complete supplied connection map"
             )
 
     # Ground every cited observation in the request. A citation the request never
@@ -122,3 +134,25 @@ def validate_recommendation(
         return ValidationOutcome("ungrounded" if ungrounded else "invalid", reasons)
 
     return ValidationOutcome("valid")
+
+
+def _files_connected(files: set[str], request: AIOptimizationRequest) -> bool:
+    """True when complete hierarchy edges connect every proposed patch file."""
+    graph: dict[str, set[str]] = {file: set() for file in files}
+    for edge in request.connection_map:
+        if not edge.complete:
+            continue
+        if edge.parent_file in files and edge.child_file in files:
+            graph[edge.parent_file].add(edge.child_file)
+            graph[edge.child_file].add(edge.parent_file)
+    if not graph:
+        return False
+    pending = [next(iter(files))]
+    visited: set[str] = set()
+    while pending:
+        file = pending.pop()
+        if file in visited:
+            continue
+        visited.add(file)
+        pending.extend(graph[file] - visited)
+    return visited == files

@@ -75,6 +75,7 @@ and `config.mk` are written by the same code either way.
 | `adapters/` | script generators (`yosys`, `opensta`, `eqy`, `orfs`) + `mock` backend |
 | `parsers/` | typed views of tool output — the part that needs refitting on Linux |
 | `sourcemap.py` | netlist objects → RTL lines, with confidence |
+| `rtl_hierarchy.py` | bounded module/instance/port connection map for multi-file context |
 | `llm/` | request builder, prompts, clients (mock, Anthropic, Groq), validator |
 | `patcher.py` | the six-check diff gate; writes isolated candidates |
 | `policy.py` | the acceptance policy — the only place a verdict is produced |
