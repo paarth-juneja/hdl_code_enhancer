@@ -6,6 +6,20 @@ is in [`../Nebula_file_workflow.md`](../Nebula_file_workflow.md).
 
 ## Run it
 
+Onboard a new RTL tree first. Nebula infers source order, a unique top module,
+obvious clock/reset ports, and conservative protected/editable paths, then emits
+a draft manifest, SDC, and review report:
+
+```bash
+python -m orchestrator.cli onboard --rtl ./my_design/rtl --top my_top
+python -m orchestrator.cli --project ./my_design/nebula.project.yaml validate
+```
+
+Use `--run-elaboration` to add a bounded Yosys hierarchy check and `--force`
+only when intentionally replacing prior onboarding output. The generated SDC is
+explicitly a draft: generated clocks, real periods, I/O delays, exceptions, CDC
+intent, and reset/formal assumptions must be reviewed before a baseline run.
+
 No EDA tools required — mock mode replays fixtures:
 
 ```bash
@@ -65,7 +79,8 @@ and `config.mk` are written by the same code either way.
 
 | Module | Role |
 |---|---|
-| `cli.py` | `validate` / `baseline` / `optimize` / `report` commands |
+| `cli.py` | `onboard` / `validate` / `baseline` / `optimize` / `report` commands |
+| `onboarding.py` | RTL discovery, source ordering, safe draft manifest/SDC/report generation |
 | `config.py` | `nebula.project.yaml` → typed `ProjectConfiguration` |
 | `pipeline.py` | the optimization loop; executes the ASM of the workflow doc §6 |
 | `statemachine.py` | the ASM in code — states, transitions, and the no-unproven-acceptance invariant |

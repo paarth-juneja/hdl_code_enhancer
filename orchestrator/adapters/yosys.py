@@ -36,7 +36,8 @@ def build_synth_script(
     )
 
     read_lines = [
-        f"read_verilog {defines} {includes} {path.as_posix()}".replace("  ", " ").strip()
+        f"read_verilog {'-sv ' if path.suffix.lower() == '.sv' else ''}"
+        f"{defines} {includes} {path.as_posix()}".replace("  ", " ").strip()
         for path in rtl_files
     ]
 

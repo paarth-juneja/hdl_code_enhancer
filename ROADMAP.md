@@ -8,6 +8,18 @@ DRC. A live Groq candidate is accepted after whole-design EQY and matched
 post-route comparison: WNS improved by 0.09479 ns while cell count and area
 decreased. Hold cleanup, activity-grounded power and final demo packaging remain.
 
+## Implemented 14 September 2026: automated RTL onboarding
+
+`python -m orchestrator.cli onboard --rtl <directory>` now discovers Verilog and
+SystemVerilog sources, infers an unambiguous top, orders files by module
+dependencies, expands constant-width clock-vector ports, detects reset/CDC/divider
+candidates, and generates a conservative project manifest, draft SDC, and review
+report. Top-level, CDC, divider, and reset-related files are protected by default;
+other files form the initial editable set. Optional `--run-elaboration` performs a
+bounded Yosys hierarchy check and returns a failing process status when it does
+not pass. Timing intent that cannot be inferred safely remains an explicit human
+review item.
+
 ## Implemented 13 September 2026: qualifying benchmark and accepted candidate
 
 `benchmarks/ethmac5` wraps the unchanged imported Ethernet MAC with two auxiliary

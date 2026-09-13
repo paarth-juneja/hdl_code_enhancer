@@ -7,6 +7,7 @@ environment this has to work in is a Windows box with no EDA tooling.
 Commands::
 
     python -m orchestrator.cli validate  [--project nebula.project.yaml]
+    python -m orchestrator.cli onboard   --rtl ./rtl [--top my_top]
     python -m orchestrator.cli baseline  [--backend mock|real]
     python -m orchestrator.cli optimize  [--backend ...] [--llm mock|anthropic|groq] [--iterations N]
     python -m orchestrator.cli report    [--project ...]
@@ -23,6 +24,7 @@ from orchestrator import __version__
 from orchestrator.adapters.base import make_backend
 from orchestrator.config import load_project, validate_inputs
 from orchestrator.llm.client import make_llm_client
+from orchestrator.onboarding import OnboardingError, onboard_project
 from orchestrator.pipeline import optimize, run_baseline
 from orchestrator.schemas.common import read_json
 
@@ -72,6 +74,41 @@ def cmd_validate(args) -> int:
     print(f"  rtl files       : {len(config.design.file_list)}")
     print(f"  protected paths : {config.security.protected_paths}")
     print(f"  settings hash   : {config.settings_hash()[:16]}")
+    return 0
+
+
+def cmd_onboard(args) -> int:
+    try:
+        result = onboard_project(
+            Path(args.rtl),
+            top=args.top,
+            output_root=Path(args.output_dir) if args.output_dir else None,
+            project_id=args.project_id,
+            clock_period_ns=args.clock_period_ns,
+            force=args.force,
+            run_elaboration=args.run_elaboration,
+        )
+    except OnboardingError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    print(f"ONBOARDED: {result.top_module}")
+    print(f"  RTL files       : {len(result.rtl_files)}")
+    print(f"  master clocks   : {result.master_clocks or 'none detected'}")
+    print(f"  reset ports     : {result.reset_ports or 'none detected'}")
+    print(f"  protected files : {len(result.protected_paths)}")
+    print(f"  editable files  : {len(result.editable_paths)}")
+    print(f"  elaboration     : {result.elaboration_status}")
+    print(f"  manifest        : {result.manifest_path}")
+    print(f"  constraints     : {result.sdc_path}")
+    print(f"  review report   : {result.report_path}")
+    print("\nDraft only: resolve every review item, then run validate and baseline.")
+    if args.run_elaboration and result.elaboration_status != "pass":
+        print(
+            "error: RTL elaboration did not pass; inspect the onboarding report.",
+            file=sys.stderr,
+        )
+        return 1
     return 0
 
 
@@ -144,6 +181,19 @@ def build_parser() -> argparse.ArgumentParser:
                         help="path to nebula.project.yaml")
 
     sub = parser.add_subparsers(dest="command", required=True)
+
+    p_on = sub.add_parser("onboard", help="discover RTL and generate a safe project draft")
+    p_on.add_argument("--rtl", required=True, help="directory containing .v/.sv sources")
+    p_on.add_argument("--top", help="top module; inferred only when unambiguous")
+    p_on.add_argument("--output-dir", help="project output directory; defaults to RTL parent")
+    p_on.add_argument("--project-id", help="manifest project identifier")
+    p_on.add_argument("--clock-period-ns", type=float, default=10.0,
+                      help="draft period applied to detected master clocks")
+    p_on.add_argument("--run-elaboration", action="store_true",
+                      help="run a bounded Yosys hierarchy/elaboration check")
+    p_on.add_argument("--force", action="store_true",
+                      help="replace existing generated manifest/SDC/report")
+    p_on.set_defaults(func=cmd_onboard)
 
     p_val = sub.add_parser("validate", help="check the project manifest and inputs")
     p_val.set_defaults(func=cmd_validate)

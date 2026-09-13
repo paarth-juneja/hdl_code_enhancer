@@ -31,8 +31,14 @@ def build_eqy_script(
     top = config.equivalence.gold_top or config.design.top_module
     relation = config.equivalence.relation
 
-    gold_reads = "\n".join(f"read_verilog {p.as_posix()}" for p in gold_files)
-    gate_reads = "\n".join(f"read_verilog {p.as_posix()}" for p in gate_files)
+    gold_reads = "\n".join(
+        f"read_verilog {'-sv ' if p.suffix.lower() == '.sv' else ''}{p.as_posix()}"
+        for p in gold_files
+    )
+    gate_reads = "\n".join(
+        f"read_verilog {'-sv ' if p.suffix.lower() == '.sv' else ''}{p.as_posix()}"
+        for p in gate_files
+    )
 
     blackbox_lines = "\n".join(
         f"blackbox {name}" for name in config.equivalence.blackboxes

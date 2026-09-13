@@ -37,15 +37,21 @@ module rtl_benchmark_top #(
     logic [DATA_WIDTH-1:0] fifo_data_out [0:4];
     logic                  fifo_full     [0:4];
 
-    // Clock division ratios: 2, 3, 4, 5, 8
-    localparam int DIV_RATIOS [0:4] = '{2, 3, 4, 5, 8};
-
     genvar i;
     generate
         for (i = 0; i < 5; i++) begin : gen_domains
+            // Clock division ratios: 2, 3, 4, 5, 8. Keep this as a scalar
+            // constant expression because the bundled Yosys does not accept
+            // unpacked localparam arrays.
+            localparam integer DIV_RATIO =
+                (i == 0) ? 2 :
+                (i == 1) ? 3 :
+                (i == 2) ? 4 :
+                (i == 3) ? 5 : 8;
+
             // 1. Clock Divider (Master -> Generated)
             clock_divider #(
-                .DIV_RATIO(DIV_RATIOS[i])
+                .DIV_RATIO(DIV_RATIO)
             ) u_clk_div (
                 .clk_in (clk_m[i]),
                 .rst_n  (rst_n),    // simple async reset for divider
