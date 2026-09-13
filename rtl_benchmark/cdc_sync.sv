@@ -51,9 +51,11 @@ module async_fifo #(
     // Pointers
     logic [ADDR_WIDTH:0] wr_ptr, wr_ptr_next;
     logic [ADDR_WIDTH:0] wr_ptr_gray, wr_ptr_gray_next;
+    logic                  wr_full_next;
     
     logic [ADDR_WIDTH:0] rd_ptr, rd_ptr_next;
     logic [ADDR_WIDTH:0] rd_ptr_gray, rd_ptr_gray_next;
+    logic                  rd_empty_next;
 
     // Synchronized pointers
     logic [ADDR_WIDTH:0] wr_ptr_gray_sync1, wr_ptr_gray_sync2;
@@ -67,9 +69,11 @@ module async_fifo #(
         if (!wr_rst_n) begin
             wr_ptr      <= '0;
             wr_ptr_gray <= '0;
+            wr_full     <= 1'b0;
         end else begin
             wr_ptr      <= wr_ptr_next;
             wr_ptr_gray <= wr_ptr_gray_next;
+            wr_full     <= wr_full_next;
             if (wr_en && !wr_full) begin
                 mem[wr_ptr[ADDR_WIDTH-1:0]] <= wr_data;
             end
@@ -84,9 +88,11 @@ module async_fifo #(
         if (!rd_rst_n) begin
             rd_ptr      <= '0;
             rd_ptr_gray <= '0;
+            rd_empty    <= 1'b1;
         end else begin
             rd_ptr      <= rd_ptr_next;
             rd_ptr_gray <= rd_ptr_gray_next;
+            rd_empty    <= rd_empty_next;
         end
     end
 
@@ -115,7 +121,11 @@ module async_fifo #(
     end
 
     // Empty / Full logic
-    assign wr_full = (wr_ptr_gray_next == {~rd_ptr_gray_sync2[ADDR_WIDTH:ADDR_WIDTH-1], rd_ptr_gray_sync2[ADDR_WIDTH-2:0]});
-    assign rd_empty = (rd_ptr_gray == wr_ptr_gray_sync2);
+    assign wr_full_next =
+        (wr_ptr_gray_next == {
+            ~rd_ptr_gray_sync2[ADDR_WIDTH:ADDR_WIDTH-1],
+            rd_ptr_gray_sync2[ADDR_WIDTH-2:0]
+        });
+    assign rd_empty_next = (rd_ptr_gray_next == wr_ptr_gray_sync2);
 
 endmodule
