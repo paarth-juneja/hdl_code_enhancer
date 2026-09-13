@@ -1,0 +1,121 @@
+schema_version: 1.0.0
+project_id: rtl_benchmark
+display_name: 'Onboarded RTL: rtl_benchmark_top'
+design:
+  top_module: rtl_benchmark_top
+  rtl_dir: ../rtl_benchmark
+  file_list:
+  - path: ../rtl_benchmark/cdc_sync.sv
+    language: systemverilog
+  - path: ../rtl_benchmark/clock_divider.sv
+    language: systemverilog
+  - path: ../rtl_benchmark/heavy_logic_core.sv
+    language: systemverilog
+  - path: ../rtl_benchmark/rtl_benchmark_top.sv
+    language: systemverilog
+  include_dirs:
+  - ../rtl_benchmark
+  defines: {}
+  parameters: {}
+constraints:
+  sdc_file: constraints/nebula.sdc
+  clock_expectations:
+  - {name: "clk_m[0]", type: master, period_ns: 10.0}
+  - {name: "clk_m[1]", type: master, period_ns: 10.0}
+  - {name: "clk_m[2]", type: master, period_ns: 10.0}
+  - {name: "clk_m[3]", type: master, period_ns: 10.0}
+  - {name: "clk_m[4]", type: master, period_ns: 10.0}
+  - {name: "clk_g[0]", type: generated, source: "clk_m[0]", divide_by: 2}
+  - {name: "clk_g[1]", type: generated, source: "clk_m[1]", divide_by: 3}
+  - {name: "clk_g[2]", type: generated, source: "clk_m[2]", divide_by: 4}
+  - {name: "clk_g[3]", type: generated, source: "clk_m[3]", divide_by: 5}
+  - {name: "clk_g[4]", type: generated, source: "clk_m[4]", divide_by: 8}
+  asynchronous_groups:
+  - ["clk_m[0]", "clk_g[0]"]
+  - ["clk_m[1]", "clk_g[1]"]
+  - ["clk_m[2]", "clk_g[2]"]
+  - ["clk_m[3]", "clk_g[3]"]
+  - ["clk_m[4]", "clk_g[4]"]
+platform:
+  platform_id: nangate45
+  liberty: ../../OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+  lef:
+  - ../../OpenROAD-flow-scripts/flow/platforms/nangate45/lef/NangateOpenCellLibrary.tech.lef
+  - ../../OpenROAD-flow-scripts/flow/platforms/nangate45/lef/NangateOpenCellLibrary.macro.lef
+  analysis_corners:
+  - typical
+toolchain:
+  tools:
+    yosys:
+      binary: /home/juneja/nebula/tools/bin/yosys
+    opensta:
+      binary: /home/juneja/nebula/tools/bin/sta
+    eqy:
+      binary: /home/juneja/nebula/tools/bin/eqy
+    orfs:
+      binary: /home/juneja/nebula/tools/bin/make
+      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+objective:
+  primary_metric: wns
+  direction: maximize
+  guardrails:
+    max_area_regression_pct: 5.0
+    max_cell_count_regression_pct: 5.0
+    latency_change_allowed: false
+    interface_change_allowed: false
+    clocks_must_be_preserved: true
+  tie_breakers:
+  - cell_area
+  - cell_count
+run_policy:
+  max_iterations: 5
+  max_candidates: 10
+  approval_mode: auto
+  authoritative_stage: orfs
+  timeouts_s:
+    synth: 1800
+    sta: 900
+    screen: 1800
+    eqy: 3600
+    orfs: 14400
+transformations:
+  allowed:
+  - balanced_adder_tree
+  - common_subexpression_extraction
+  - constant_folding
+  - boolean_reassociation
+  - mux_factoring
+  - logic_replication
+  forbidden:
+  - pipelining
+  - retiming
+  - clock_gating
+  - reset_restructuring
+  - cdc_modification
+  - interface_change
+  change_budget:
+    max_changed_lines: 40
+    max_changed_files: 2
+security:
+  model_data_policy: bounded_context_only
+  protected_paths:
+  - ../rtl_benchmark/cdc_sync.sv
+  - ../rtl_benchmark/clock_divider.sv
+  - ../rtl_benchmark/rtl_benchmark_top.sv
+  editable_paths:
+  - ../rtl_benchmark/heavy_logic_core.sv
+  redact_patterns: []
+equivalence:
+  relation: cycle_exact
+  gold_top: rtl_benchmark_top
+  gate_top: rtl_benchmark_top
+  reset_assumption: reset_sequence_identical
+  blackboxes: []
+llm:
+  propose_model: openai/gpt-oss-120b
+  repair_model: openai/gpt-oss-120b
+  narrate_model: openai/gpt-oss-120b
+  max_output_tokens: 4096
+  temperature: 0.2
+  max_repairs_per_iteration: 1
+  prompt_version: 1.0.0

@@ -15,13 +15,13 @@ module rtl_benchmark_top #(
     input  logic                  in_valid,
     input  logic [DATA_WIDTH-1:0] in_data,
 
+    // Export generated clocks so SDC anchors survive both synthesis flows.
+    output logic [4:0]            clk_g,
+
     // Primary Output (comes from Domain 4)
     output logic                  out_valid,
     output logic [DATA_WIDTH-1:0] out_data
 );
-
-    // Generated clocks
-    logic [4:0] clk_g;
 
     // Reset synchronizers per master clock domain
     logic [4:0] rst_m_n_sync;

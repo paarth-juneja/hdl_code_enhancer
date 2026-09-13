@@ -140,3 +140,24 @@ def test_systemverilog_adapters_enable_sv(tmp_path: Path):
         tmp_path / "equiv.eqy",
     )
     assert "read_verilog -sv" in eqy
+
+
+def test_tracked_rtl_benchmark_has_stable_complete_clock_constraints():
+    from orchestrator.config import load_project, validate_inputs
+
+    repo_root = Path(__file__).resolve().parents[1]
+    project = load_project(repo_root / "rtl_benchmark_run" / "nebula.project.yaml")
+
+    assert validate_inputs(project) == []
+    assert {clock.name for clock in project.constraints.clock_expectations} == {
+        *(f"clk_m[{index}]" for index in range(5)),
+        *(f"clk_g[{index}]" for index in range(5)),
+    }
+    assert project.constraints.asynchronous_groups == [
+        [f"clk_m[{index}]", f"clk_g[{index}]"] for index in range(5)
+    ]
+
+    sdc = project.sdc_path().read_text(encoding="utf-8")
+    assert sdc.count("create_generated_clock") == 5
+    for index, ratio in enumerate((2, 3, 4, 5, 8)):
+        assert f"-divide_by {ratio} [get_ports {{clk_g[{index}]}}]" in sdc
