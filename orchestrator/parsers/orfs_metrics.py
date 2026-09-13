@@ -28,8 +28,18 @@ def parse_orfs_metrics(
     """Return post-route QoR and timing from an ORFS metadata file."""
     data = json.loads(metadata_path.read_text(encoding="utf-8"))
 
-    cell_count = _first(data, "finish__design__instance__count",
-                        "synth__design__instance__count")
+    # ORFS's unqualified finish instance count includes filler and tap cells.
+    # Those implementation-only instances can outnumber the logic and must not
+    # be reported as the design's standard-cell count. Prefer the explicit
+    # stdcell metric, retaining older metadata keys only as compatibility
+    # fallbacks.
+    cell_count = _first(
+        data,
+        "finish__design__instance__count__stdcell",
+        "finish__design__instance__count",
+        "synth__design__instance__count__stdcell",
+        "synth__design__instance__count",
+    )
     cell_area = _first(data, "finish__design__instance__area")
     wns = _first(data, "finish__timing__setup__ws")
     tns = _first(data, "finish__timing__setup__tns")

@@ -1,0 +1,132 @@
+schema_version: "1.0.0"
+project_id: ethmac5
+display_name: Five-domain Ethernet MAC qualification benchmark
+
+design:
+  top_module: nebula_ethmac5_top
+  rtl_dir: rtl
+  file_list:
+    - {path: ../ethmac/rtl/eth_clockgen.v}
+    - {path: ../ethmac/rtl/eth_cop.v}
+    - {path: ../ethmac/rtl/eth_crc.v}
+    - {path: ../ethmac/rtl/eth_fifo.v}
+    - {path: ../ethmac/rtl/eth_maccontrol.v}
+    - {path: ../ethmac/rtl/eth_macstatus.v}
+    - {path: ../ethmac/rtl/eth_miim.v}
+    - {path: ../ethmac/rtl/eth_outputcontrol.v}
+    - {path: ../ethmac/rtl/eth_random.v}
+    - {path: ../ethmac/rtl/eth_receivecontrol.v}
+    - {path: ../ethmac/rtl/eth_register.v}
+    - {path: ../ethmac/rtl/eth_registers.v}
+    - {path: ../ethmac/rtl/eth_rxaddrcheck.v}
+    - {path: ../ethmac/rtl/eth_rxcounters.v}
+    - {path: ../ethmac/rtl/eth_rxethmac.v}
+    - {path: ../ethmac/rtl/eth_rxstatem.v}
+    - {path: ../ethmac/rtl/eth_shiftreg.v}
+    - {path: ../ethmac/rtl/eth_spram_256x32.v}
+    - {path: ../ethmac/rtl/eth_top.v}
+    - {path: ../ethmac/rtl/eth_transmitcontrol.v}
+    - {path: ../ethmac/rtl/eth_txcounters.v}
+    - {path: ../ethmac/rtl/eth_txethmac.v}
+    - {path: ../ethmac/rtl/eth_txstatem.v}
+    - {path: ../ethmac/rtl/eth_wishbone.v}
+    - {path: ../ethmac/rtl/ethmac.v}
+    - {path: ../ethmac/rtl/ethmac_defines.v}
+    - {path: ../ethmac/rtl/timescale.v}
+    - {path: rtl/nebula_clock_div2.v}
+    - {path: rtl/nebula_aux_cdc.v}
+    - {path: rtl/nebula_aux_domain.v}
+    - {path: rtl/nebula_ethmac5_top.v}
+  include_dirs: [../ethmac/rtl]
+
+constraints:
+  sdc_file: constraints/ethmac5.sdc
+  clock_expectations:
+    - {name: wb_clk, type: master, period_ns: 220}
+    - {name: tx_clk, type: master, period_ns: 40}
+    - {name: rx_clk, type: master, period_ns: 40}
+    - {name: aux0_clk, type: master, period_ns: 0.45}
+    - {name: aux1_clk, type: master, period_ns: 0.5625}
+    - {name: wb_clk_div2, type: generated, source: wb_clk, divide_by: 2}
+    - {name: tx_clk_div2, type: generated, source: tx_clk, divide_by: 2}
+    - {name: rx_clk_div2, type: generated, source: rx_clk, divide_by: 2}
+    - {name: aux0_clk_div2, type: generated, source: aux0_clk, divide_by: 2}
+    - {name: aux1_clk_div2, type: generated, source: aux1_clk, divide_by: 2}
+  asynchronous_groups:
+    - [wb_clk, wb_clk_div2]
+    - [tx_clk, tx_clk_div2]
+    - [rx_clk, rx_clk_div2]
+    - [aux0_clk, aux0_clk_div2]
+    - [aux1_clk, aux1_clk_div2]
+
+platform:
+  platform_id: nangate45
+  liberty: ../../platform/nangate45/NangateOpenCellLibrary_typical.lib
+  lef:
+    - ../../platform/nangate45/NangateOpenCellLibrary.tech.lef
+    - ../../platform/nangate45/NangateOpenCellLibrary.macro.lef
+
+toolchain:
+  tools:
+    yosys: {binary: /home/juneja/nebula/tools/bin/yosys}
+    opensta: {binary: /home/juneja/nebula/tools/bin/sta}
+    eqy: {binary: /home/juneja/nebula/tools/bin/eqy}
+    orfs:
+      binary: /home/juneja/nebula/tools/bin/make
+      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+
+objective:
+  primary_metric: wns
+  direction: maximize
+  guardrails:
+    max_area_regression_pct: 5.0
+    max_cell_count_regression_pct: 5.0
+    latency_change_allowed: false
+    interface_change_allowed: false
+    clocks_must_be_preserved: true
+  tie_breakers: [cell_area, cell_count]
+
+run_policy:
+  max_iterations: 5
+  max_candidates: 10
+  approval_mode: auto
+  authoritative_stage: orfs
+  timeouts_s: {synth: 1200, sta: 600, screen: 1200, eqy: 3600, orfs: 2400}
+
+transformations:
+  allowed:
+    - balanced_adder_tree
+    - common_subexpression_extraction
+    - constant_folding
+    - boolean_reassociation
+    - mux_factoring
+    - logic_replication
+  forbidden: [pipelining, retiming, clock_gating, reset_restructuring, cdc_modification, interface_change]
+  change_budget: {max_changed_lines: 40, max_changed_files: 1}
+
+security:
+  model_data_policy: bounded_context_only
+  protected_paths:
+    - rtl/nebula_clock_div2.v
+    - rtl/nebula_aux_cdc.v
+    - rtl/nebula_ethmac5_top.v
+    - ../ethmac/rtl/eth_clockgen.v
+    - ../ethmac/rtl/eth_wishbone.v
+    - ../ethmac/rtl/eth_fifo.v
+  editable_paths: [rtl/nebula_aux_domain.v]
+
+equivalence:
+  relation: cycle_exact
+  gold_top: nebula_ethmac5_top
+  gate_top: nebula_ethmac5_top
+  reset_assumption: reset_sequence_identical
+  blackboxes: []
+
+llm:
+  propose_model: openai/gpt-oss-120b
+  repair_model: openai/gpt-oss-120b
+  narrate_model: openai/gpt-oss-120b
+  max_output_tokens: 2048
+  temperature: 0.2
+  max_repairs_per_iteration: 1
+  prompt_version: "1.0.0"

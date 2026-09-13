@@ -1,0 +1,61 @@
+project_id: ethmac
+display_name: OpenCores Ethernet MAC qualification candidate
+design:
+  top_module: ethmac
+  rtl_dir: rtl
+  include_dirs: [rtl]
+  file_list:
+    - path: rtl/eth_clockgen.v
+    - path: rtl/eth_cop.v
+    - path: rtl/eth_crc.v
+    - path: rtl/eth_fifo.v
+    - path: rtl/eth_maccontrol.v
+    - path: rtl/eth_macstatus.v
+    - path: rtl/eth_miim.v
+    - path: rtl/eth_outputcontrol.v
+    - path: rtl/eth_random.v
+    - path: rtl/eth_receivecontrol.v
+    - path: rtl/eth_register.v
+    - path: rtl/eth_registers.v
+    - path: rtl/eth_rxaddrcheck.v
+    - path: rtl/eth_rxcounters.v
+    - path: rtl/eth_rxethmac.v
+    - path: rtl/eth_rxstatem.v
+    - path: rtl/eth_shiftreg.v
+    - path: rtl/eth_spram_256x32.v
+    - path: rtl/eth_top.v
+    - path: rtl/eth_transmitcontrol.v
+    - path: rtl/eth_txcounters.v
+    - path: rtl/eth_txethmac.v
+    - path: rtl/eth_txstatem.v
+    - path: rtl/eth_wishbone.v
+    - path: rtl/ethmac.v
+    - path: rtl/ethmac_defines.v
+    - path: rtl/timescale.v
+constraints:
+  sdc_file: constraints/ethmac.sdc
+  clock_expectations:
+    - {name: wb_clk, type: master, period_ns: 10}
+    - {name: tx_clk, type: master, period_ns: 40}
+    - {name: rx_clk, type: master, period_ns: 40}
+  asynchronous_groups: [[wb_clk], [tx_clk], [rx_clk]]
+platform:
+  platform_id: nangate45
+  liberty: ../../platform/nangate45/NangateOpenCellLibrary_typical.lib
+  lef:
+    - ../../platform/nangate45/NangateOpenCellLibrary.tech.lef
+    - ../../platform/nangate45/NangateOpenCellLibrary.macro.lef
+toolchain:
+  tools:
+    yosys: {binary: /home/juneja/nebula/tools/bin/yosys}
+    opensta: {binary: /home/juneja/nebula/tools/bin/sta}
+    eqy: {binary: /home/juneja/nebula/tools/bin/eqy}
+    orfs:
+      binary: /home/juneja/nebula/tools/bin/make
+      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+security:
+  editable_paths: [rtl/eth_crc.v]
+  protected_paths: [rtl/eth_clockgen.v, rtl/eth_wishbone.v, rtl/eth_fifo.v]
+run_policy:
+  timeouts_s: {synth: 600, sta: 180, orfs: 1800}
+

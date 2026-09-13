@@ -1,13 +1,34 @@
 # Nebula roadmap
 
-## Completed 12 September 2026: bounded multi-module optimization
+## Submission priority
 
-Nebula currently sends the model one critical path and one bounded slice from
-one RTL file. Although the manifest permits two changed files, the validator
-only allows files actually supplied in the request, so today's effective edit
-scope is one file. Full-design synthesis and formal checks can reject a broken
-cross-module proposal, but the model lacks enough hierarchy context to create a
-good one reliably.
+See `SUBMISSION_READINESS.md` for the official requirement audit. The qualifying
+five-domain benchmark now measures 57,608 routed standard cells with zero route
+DRC. A live Groq candidate is accepted after whole-design EQY and matched
+post-route comparison: WNS improved by 0.09479 ns while cell count and area
+decreased. Hold cleanup, activity-grounded power and final demo packaging remain.
+
+## Implemented 13 September 2026: qualifying benchmark and accepted candidate
+
+`benchmarks/ethmac5` wraps the unchanged imported Ethernet MAC with two auxiliary
+asynchronous domains, five fixed generated clocks, observable generated-clock
+loads and explicit auxiliary CDC synchronizers. The original MAC supplies the
+programmable-ratio clock-divider logic. Frozen run `20260913T160717Z_baseline`
+measured 51,359 standalone-synthesis cells and 57,608 final routed standard
+cells, with all ten declared clock names detected, 139,496 um^2 cell area, zero
+route DRC and zero antenna violations.
+
+Live run `20260913T164418Z_optimize` accepted a model-proposed balanced XOR tree
+after complete cycle-exact EQY. Routed WNS improved from -0.430501 ns to
+-0.335711 ns, TNS improved by 3.4968 ns, standard cells fell by 100, area fell
+by 142 um^2, and DRC remained zero. The accepted RTL and tracked evidence are
+under `benchmarks/ethmac5/optimized` and `benchmarks/ethmac5/evidence`.
+
+## Implemented 12 September 2026: initial multi-module context
+
+Previously, requests supplied only one source slice. Requests now include
+source-scanned hierarchy context; this remains an initial implementation, not
+a demonstrated optimization of a complete timing cone.
 
 Nebula now builds a bounded multi-file context from the critical timing cone:
 
@@ -26,7 +47,9 @@ Nebula now builds a bounded multi-file context from the critical timing cone:
 Acceptance evidence: 21 tests cover producer/consumer selection, AES hierarchy
 traversal, two-file validation/application, missing port connections, read-only
 modules, and the full mock pipeline. A real two-file candidate was also proved
-equivalent across the complete truth-fixture design by EQY (`PASS`, 2 seconds);
+equivalent across the complete truth-fixture design by EQY (`PASS`, 2 seconds).
+That candidate changed comments only and is a plumbing check, not an optimized
+RTL result;
 its ignored evidence is under `runs/_multi_module_check_20260912/`.
 
 ## Next milestone: live multi-module optimization trial

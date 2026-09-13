@@ -144,7 +144,7 @@ class MockBackend(Backend):
             out / "synth_stat.txt",
             {"CELL_COUNT": o.cell_count, "CELL_AREA": f"{o.cell_area:.6f}"},
         )
-        self._render("yosys/netlist.v.tmpl", out / "netlist.v", {})
+        self._render("yosys/netlist.v.tmpl", out / "netlist.v", {"LABEL": o.label})
         self._render("yosys/design.json.tmpl", out / "design.json", {})
         write_text(out / "yosys.log",
                    f"[mock] synthesis complete: {o.cell_count} cells, "

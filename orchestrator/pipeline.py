@@ -14,6 +14,7 @@ machine so the trace matches the chart.
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -101,12 +102,22 @@ def run_baseline(
     _stage_backend_hook(backend, "synth", "baseline")
     synth_dir = workspace.stage_dir("synth")
     synth_inv = yosys_adapter.synth_invocation(config, config.rtl_files(), synth_dir)
-    backend.execute(synth_inv)
+    synth_proc = backend.execute(synth_inv)
+    if not synth_proc.ok:
+        raise RuntimeError(
+            f"baseline synthesis failed ({synth_proc.status.value}): "
+            f"{synth_proc.stderr_tail or synth_proc.stdout_tail}"
+        )
 
     _stage_backend_hook(backend, "sta", "baseline")
     sta_dir = workspace.stage_dir("sta")
     sta_inv = sta_adapter.sta_invocation(config, synth_dir / "netlist.v", sta_dir)
-    backend.execute(sta_inv)
+    sta_proc = backend.execute(sta_inv)
+    if not sta_proc.ok:
+        raise RuntimeError(
+            f"baseline STA failed ({sta_proc.status.value}): "
+            f"{sta_proc.stderr_tail or sta_proc.stdout_tail}"
+        )
 
     timing, paths = parse_timing(sta_dir, workspace.run_id, "synth")
 
@@ -136,7 +147,12 @@ def run_baseline(
     _stage_backend_hook(backend, "orfs", "baseline")
     orfs_dir = workspace.stage_dir("orfs")
     orfs_inv = orfs_adapter.orfs_invocation(config, config.rtl_files(), orfs_dir)
-    backend.execute(orfs_inv)
+    orfs_proc = backend.execute(orfs_inv)
+    if not orfs_proc.ok:
+        raise RuntimeError(
+            f"baseline ORFS failed ({orfs_proc.status.value}): "
+            f"{orfs_proc.stderr_tail or orfs_proc.stdout_tail}"
+        )
     orfs_qor, orfs_timing = parse_orfs_metrics(
         orfs_inv.expected_outputs["metadata"], workspace.run_id
     )
@@ -165,6 +181,20 @@ def reuse_baseline(
         )
     if manifest.get("settings_hash") != config.settings_hash():
         raise ValueError("baseline settings hash does not match the current project")
+
+    lock = read_json(run_dir / "00_validate" / "manifest.lock.json")
+    recorded_hashes = lock.get("file_hashes", {})
+    current_hashes = config.input_hashes()
+    mismatched_rtl = [
+        path for path in config.rtl_relpaths()
+        if path not in recorded_hashes or path not in current_hashes
+        or recorded_hashes[path] != current_hashes[path]
+    ]
+    if mismatched_rtl:
+        raise ValueError(
+            "baseline RTL does not match the current project: "
+            + ", ".join(mismatched_rtl)
+        )
 
     timing = TimingAnalysisResult.model_validate(
         read_json(run_dir / "30_parse" / "timing_analysis.json")
@@ -237,6 +267,7 @@ def optimize(
         baseline_run_id=baseline.reference_run_id or baseline.workspace.run_id
     )
     machine = StateMachine(state=RunState.BUILD_REQUEST)
+    seen_netlist_hashes: set[str] = set()
 
     for index in range(1, iterations + 1):
         machine.state = RunState.BUILD_REQUEST
@@ -244,7 +275,8 @@ def optimize(
         printer(f"\n[iter {index}] building request")
 
         record = _run_iteration(
-            config, backend, llm, baseline, ledger, machine, index, printer
+            config, backend, llm, baseline, ledger, machine, index, printer,
+            seen_netlist_hashes,
         )
         report.iterations.append(record)
         ledger.append(record)
@@ -271,6 +303,7 @@ def _run_iteration(
     machine: StateMachine,
     index: int,
     printer,
+    seen_netlist_hashes: set[str],
 ) -> IterationRecord:
     """One trip around the ASM. Returns the iteration record whatever happened."""
     ws = baseline.workspace
@@ -404,6 +437,27 @@ def _run_iteration(
     ws.save_json("screen", "screen_qor.json", screen_qor, candidate_id=candidate_id)
     record.stage_statuses["screen"] = screen_timing.status.value
 
+    # Different-looking RTL patches can elaborate to the exact same design
+    # (for example, when only a comment or temporary wire name differs).  Do
+    # not repeat whole-design EQY and a long physical run for an already-seen
+    # synthesized netlist.  This check deliberately happens after STA so the
+    # duplicate still retains complete cheap-screen evidence.
+    netlist_hash = _sha256_file(screen_synth / "netlist.v")
+    if netlist_hash in seen_netlist_hashes:
+        machine.advance("regressed")
+        record.measured_delta = _delta_dict(baseline, screen_timing, screen_qor)
+        return _reject(
+            record,
+            machine,
+            ws,
+            index,
+            reason="duplicate_netlist",
+            detail=[f"synthesized netlist already evaluated: {netlist_hash}"],
+            printer=printer,
+            advanced=True,
+        )
+    seen_netlist_hashes.add(netlist_hash)
+
     if not policy_engine.screen_improved(baseline.timing.wns.value, screen_timing.wns.value):
         machine.advance("regressed")
         printer(f"[iter {index}] screen: wns {screen_timing.wns} did not beat "
@@ -509,6 +563,15 @@ def _llm_error_detail(exc: Exception) -> str:
     """Bound an external-provider error before saving it as run evidence."""
     message = " ".join(str(exc).split())
     return f"{type(exc).__name__}: {message}"[:4000]
+
+
+def _sha256_file(path: Path) -> str:
+    """Return a stable content identity for a generated artifact."""
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _reject(record, machine, ws, index, reason, detail, printer, advanced=False):

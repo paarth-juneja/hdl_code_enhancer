@@ -2,6 +2,14 @@
 
 Last updated: 12 September 2026
 
+Submission audit correction: see `SUBMISSION_READINESS.md`. The official benchmark
+requires five asynchronous masters, one generated clock per master, CDC/dividers,
+and approximately 50K cells; the current main fixture does not qualify. Saved
+loop reports show no accepted real optimization. The recent two-file EQY check
+changed comments only. Submission readiness must not be inferred from passing
+mock tests or that proof. Baseline reuse now checks saved RTL hashes in addition
+to settings; all 22 tests pass after this correction.
+
 Purpose: this is a compact, living record of the decisions and next actions discussed for the Nebula RTL optimization project. Update it whenever the architecture, environment, constraints, or implementation status changes.
 
 ## Project objective
@@ -381,6 +389,21 @@ loop that already measures candidate QoR and proves equivalence independently.
   the complete truth-fixture design (`PASS`, 2 seconds). The next milestone is
   a live multi-module trial against the reusable AES baseline.
 
+### 13 September 2026 qualifying benchmark
+
+- Added `benchmarks/ethmac5`, preserving the imported OpenCores Ethernet RTL and
+  placing locally constructed qualification logic in a separate wrapper.
+- The clock inventory is five asynchronous masters plus five divide-by-two
+  generated clocks. Auxiliary request/response toggles use two-flop CDC
+  synchronizers; clock and CDC files are protected from model edits.
+- Real baseline `20260913T105942Z_baseline` completed through final GDS: 49,816
+  standalone Yosys cells, 47,064 ORFS-synthesis cells, 50,725 routed functional
+  standard cells, 126,423 um^2 cell area, and zero final routing DRC errors.
+- ORFS reports setup WS 6.44766 ns and TNS 0; hold WS -0.00734002 ns, hold TNS
+  -0.00775574 ns and two hold violations. Do not call this fully timing-clean.
+- Fixed the ORFS metric parser to prefer the standard-cell count rather than
+  the all-instance count, which included 77,711 filler/tap cells in this run.
+
 ## File workflow and orchestrator (frozen 8 August 2026)
 
 The file-level dataflow is now documented in `Nebula_file_workflow.md` and
@@ -428,3 +451,20 @@ Key decisions baked in:
 - [OpenSTA repository and interface documentation](https://github.com/The-OpenROAD-Project/OpenSTA)
 - [EQY getting started](https://yosyshq.readthedocs.io/projects/eqy/en/latest/quickstart.html)
 - [Local project development guide](./Nebula_project_development_guide.md)
+
+## 14 September 2026 accepted ethmac5 optimization
+
+- Frozen baseline `20260913T160717Z_baseline`: 51,359 standalone synthesis
+  cells; 57,608 routed standard cells; 139,496 um^2 area; setup WNS -0.430501
+  ns; setup TNS -22.1458 ns; zero detailed-route DRC and antenna violations.
+- Live Groq run `20260913T164418Z_optimize` proposed a balanced XOR tree in the
+  only editable datapath file. Candidate `cand_0001_06c207` passed whole-design
+  cycle-exact EQY and the matched post-route policy.
+- Accepted metrics: WNS -0.335711 ns (+0.09479 ns), TNS -18.649 ns (+3.4968
+  ns), 57,508 routed standard cells (-100), 139,354 um^2 area (-142), 0.228874
+  W vectorless power (-0.88%), zero DRC and antenna violations.
+- The candidate improves QoR but is not timing-closed: hold WNS is -0.00689157
+  ns and setup WNS remains negative. Power is not activity-annotated signoff.
+- A later proposal synthesized to the identical netlist and reproduced the
+  physical result. Synthesized-netlist hashing now skips such duplicate EQY and
+  ORFS work in future runs.

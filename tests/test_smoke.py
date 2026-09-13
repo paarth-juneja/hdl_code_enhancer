@@ -21,10 +21,11 @@ from pathlib import Path
 import pytest
 
 from orchestrator.adapters.base import make_backend
+from orchestrator.adapters.mock import MockBackend, MockOutcome
 from orchestrator.config import check_clock_inventory, load_project
 from orchestrator.llm.client import LLMClient, make_llm_client
 from orchestrator.patcher import _Hunk, _apply_hunk, apply_patch
-from orchestrator.pipeline import optimize, run_baseline
+from orchestrator.pipeline import _sha256_file, optimize, run_baseline
 from orchestrator.schemas.ai import RTLPatch
 from orchestrator.statemachine import assert_no_unproven_acceptance
 
@@ -107,6 +108,18 @@ def test_completed_baseline_can_be_reused(sandbox: Path):
     assert len(optimize_runs) == 1
     reference = (optimize_runs[0] / "baseline_reference.json").read_text()
     assert baseline.workspace.run_id in reference
+
+
+def test_reuse_baseline_rejects_changed_rtl(sandbox: Path):
+    from orchestrator.pipeline import reuse_baseline
+
+    config = load_project(sandbox / "nebula.project.yaml")
+    backend = make_backend("mock")
+    baseline = run_baseline(config, backend, printer=lambda *_: None)
+    source = sandbox / "rtl/dsp_core.v"
+    source.write_text(source.read_text() + "\n// modified after baseline\n")
+    with pytest.raises(ValueError, match="baseline RTL does not match"):
+        reuse_baseline(config, baseline.workspace.root, backend, printer=lambda *_: None)
 
 
 def test_llm_repair_error_is_recorded_and_next_iteration_runs(sandbox: Path):
@@ -203,3 +216,35 @@ def test_clock_inventory_is_anchored_on_the_manifest(sandbox: Path):
 def test_asm_has_no_unproven_acceptance():
     # Raises if anyone wires an UNKNOWN/FAIL equivalence result toward ORFS.
     assert_no_unproven_acceptance() is None
+
+
+def test_generated_netlist_hash_is_content_based(tmp_path: Path):
+    first = tmp_path / "first.v"
+    second = tmp_path / "second.v"
+    first.write_text("module top; endmodule\n", encoding="utf-8")
+    second.write_text("module top; endmodule\n", encoding="utf-8")
+    assert _sha256_file(first) == _sha256_file(second)
+
+    second.write_text("module changed; endmodule\n", encoding="utf-8")
+    assert _sha256_file(first) != _sha256_file(second)
+
+
+def test_duplicate_synthesized_netlist_skips_formal_and_physical(sandbox: Path):
+    duplicate = MockOutcome(
+        "same_netlist", wns=-0.186, tns=-6.210, violation_count=18,
+        cell_count=1206, cell_area=2013.7, eqy_status="PASS",
+    )
+    backend = MockBackend(scenario=(duplicate, duplicate))
+    report = optimize(
+        load_project(sandbox / "nebula.project.yaml"),
+        backend,
+        make_llm_client("mock"),
+        max_iterations=2,
+        printer=lambda *_: None,
+    )
+
+    assert report.iterations[0].verdict.value == "ACCEPTED"
+    assert report.iterations[1].verdict.value == "REJECTED"
+    candidate = report.iterations[1].candidate_id
+    assert not list(sandbox.glob(f"runs/*/candidates/{candidate}/60_eqy/*"))
+    assert not list(sandbox.glob(f"runs/*/candidates/{candidate}/70_orfs/*"))
