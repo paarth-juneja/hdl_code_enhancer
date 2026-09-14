@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "comparison_id": "cand_0001_06c207_cmp",
+  "baseline_run_id": "20260913T160717Z_baseline",
+  "candidate_run_id": "20260913T164418Z_optimize",
+  "candidate_id": "cand_0001_06c207",
+  "authoritative_stage": "orfs",
+  "configuration_equivalence": {
+    "same_toolchain": true,
+    "same_constraints": true,
+    "same_library": true,
+    "same_corner": true,
+    "differences": []
+  },
+  "metrics": [
+    {
+      "name": "wns",
+      "baseline": -0.430501,
+      "candidate": -0.335711,
+      "unit": "ns",
+      "absolute_delta": 0.09479,
+      "relative_delta_pct": 22.019,
+      "direction": "improve",
+      "source_artifact": null
+    },
+    {
+      "name": "tns",
+      "baseline": -22.1458,
+      "candidate": -18.649,
+      "unit": "ns",
+      "absolute_delta": 3.4968,
+      "relative_delta_pct": 15.79,
+      "direction": "improve",
+      "source_artifact": null
+    },
+    {
+      "name": "cell_count",
+      "baseline": 57608.0,
+      "candidate": 57508.0,
+      "unit": "cells",
+      "absolute_delta": -100.0,
+      "relative_delta_pct": -0.174,
+      "direction": "improve",
+      "source_artifact": null
+    },
+    {
+      "name": "cell_area",
+      "baseline": 139496.0,
+      "candidate": 139354.0,
+      "unit": "um^2",
+      "absolute_delta": -142.0,
+      "relative_delta_pct": -0.102,
+      "direction": "improve",
+      "source_artifact": null
+    }
+  ],
+  "guardrail_results": [
+    {
+      "name": "area_regression",
+      "limit": 5.0,
+      "observed": -0.102,
+      "passed": true,
+      "detail": "cell_area delta -0.102%"
+    },
+    {
+      "name": "cell_count_regression",
+      "limit": 5.0,
+      "observed": -0.174,
+      "passed": true,
+      "detail": "cell_count delta -0.174%"
+    }
+  ],
+  "latency_throughput_changes": "none",
+  "equivalence_status": "PASS",
+  "pareto_status": "not_evaluated",
+  "acceptance_policy_version": "1.0.0",
+  "verdict": "ACCEPTED",
+  "failure_class": "NONE",
+  "verdict_reasons": [
+    "equivalence PASS; wns +0.09479 ns; area -0.102% within 5.0%"
+  ]
+}

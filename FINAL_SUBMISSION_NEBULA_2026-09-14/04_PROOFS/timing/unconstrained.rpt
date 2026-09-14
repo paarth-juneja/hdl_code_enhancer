@@ -1,0 +1,382 @@
+Startpoint: aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1257    0.1257 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0517    0.1774 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2223 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2665 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3065 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3424 ^ aux0_seed_i_MUX2_X1_B/Z (MUX2_X1)
+   0.0000    0.3424 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3424   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3424   data arrival time
+-------------------------------------------------------------
+            -0.0253   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_div2_o_DFFR_X1_CK_14
+            (rising edge-triggered flip-flop clocked by aux0_clk_div2)
+Endpoint: aux0_clk_div2_o_DFFR_X1_CK
+          (rising edge-triggered flip-flop clocked by aux0_clk_div2)
+Path Group: aux0_clk_div2
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk_div2 (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_div2_o_DFFR_X1_CK_14/CK (DFFR_X1)
+   0.1256    0.1256 ^ aux0_clk_div2_o_DFFR_X1_CK_14/Q (DFFR_X1)
+   0.0294    0.1550 v aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_7_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0395    0.1945 ^ aux0_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0459    0.2403 ^ aux0_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_B_AND2_X1_A2/ZN (AND2_X1)
+   0.0290    0.2693 v aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_8_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0514    0.3207 ^ aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_8_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.3525 v aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_1_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0519    0.4044 ^ aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_1_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.4361 v aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0434    0.4796 ^ aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0187    0.4983 v aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_3_B_NAND2_X1_ZN/ZN (NAND2_X1)
+   0.0290    0.5273 ^ aux0_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_3/ZN (XNOR2_X1)
+   0.0000    0.5273 ^ aux0_clk_div2_o_DFFR_X1_CK/D (DFFR_X1)
+             0.5273   data arrival time
+
+   0.9000    0.9000   clock aux0_clk_div2 (rise edge)
+   0.0000    0.9000   clock network delay (ideal)
+  -0.1000    0.8000   clock uncertainty
+   0.0000    0.8000   clock reconvergence pessimism
+             0.8000 ^ aux0_clk_div2_o_DFFR_X1_CK/CK (DFFR_X1)
+  -0.0336    0.7664   library setup time
+             0.7664   data required time
+-------------------------------------------------------------
+             0.7664   data required time
+            -0.5273   data arrival time
+-------------------------------------------------------------
+             0.2391   slack (MET)
+
+
+Startpoint: aux1_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux1_clk)
+Endpoint: aux1_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux1_clk)
+Path Group: aux1_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux1_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux1_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1257    0.1257 ^ aux1_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0517    0.1774 ^ aux1_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2223 ^ aux1_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2665 ^ aux1_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3065 ^ aux1_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3424 ^ aux1_seed_i_MUX2_X1_B_11/Z (MUX2_X1)
+   0.0000    0.3424 ^ aux1_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3424   data arrival time
+
+   0.5625    0.5625   clock aux1_clk (rise edge)
+   0.0000    0.5625   clock network delay (ideal)
+  -0.1000    0.4625   clock uncertainty
+   0.0000    0.4625   clock reconvergence pessimism
+             0.4625 ^ aux1_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.4296   library setup time
+             0.4296   data required time
+-------------------------------------------------------------
+             0.4296   data required time
+            -0.3424   data arrival time
+-------------------------------------------------------------
+             0.0872   slack (MET)
+
+
+Startpoint: aux1_clk_div2_o_DFFR_X1_CK_13
+            (rising edge-triggered flip-flop clocked by aux1_clk_div2)
+Endpoint: aux1_clk_div2_o_DFFR_X1_CK_15
+          (rising edge-triggered flip-flop clocked by aux1_clk_div2)
+Path Group: aux1_clk_div2
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux1_clk_div2 (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux1_clk_div2_o_DFFR_X1_CK_13/CK (DFFR_X1)
+   0.1256    0.1256 ^ aux1_clk_div2_o_DFFR_X1_CK_13/Q (DFFR_X1)
+   0.0294    0.1550 v aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_7_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0395    0.1945 ^ aux1_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_4_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0459    0.2403 ^ aux1_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_4_B_AND2_X1_A2/ZN (AND2_X1)
+   0.0290    0.2693 v aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0514    0.3207 ^ aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.3525 v aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_1_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0519    0.4044 ^ aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_1_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.4361 v aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_2_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0434    0.4796 ^ aux1_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_1_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0187    0.4983 v aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_5_B_NAND2_X1_ZN/ZN (NAND2_X1)
+   0.0290    0.5273 ^ aux1_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_5/ZN (XNOR2_X1)
+   0.0000    0.5273 ^ aux1_clk_div2_o_DFFR_X1_CK_15/D (DFFR_X1)
+             0.5273   data arrival time
+
+   1.1250    1.1250   clock aux1_clk_div2 (rise edge)
+   0.0000    1.1250   clock network delay (ideal)
+  -0.1000    1.0250   clock uncertainty
+   0.0000    1.0250   clock reconvergence pessimism
+             1.0250 ^ aux1_clk_div2_o_DFFR_X1_CK_15/CK (DFFR_X1)
+  -0.0336    0.9914   library setup time
+             0.9914   data required time
+-------------------------------------------------------------
+             0.9914   data required time
+            -0.5273   data arrival time
+-------------------------------------------------------------
+             0.4641   slack (MET)
+
+
+Startpoint: mrxdv_pad_i (input port clocked by rx_clk)
+Endpoint: u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1_ZN_AND3_X1_A3_ZN_AOI211_X1_C2_ZN_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by rx_clk)
+Path Group: rx_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock rx_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   2.0000    2.0000 ^ input external delay
+   0.0086    2.0086 ^ mrxdv_pad_i (in)
+   0.0200    2.0286 v mrxdv_pad_i_NAND2_X1_A2/ZN (NAND2_X1)
+   0.0289    2.0576 ^ mtxen_pad_o_AOI21_X1_B1_A_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0268    2.0844 v mtxen_pad_o_AOI21_X1_B1/ZN (AOI21_X1)
+   0.0561    2.1405 ^ u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1/ZN (AOI21_X1)
+   0.0511    2.1915 ^ u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_ZN_AND2_X1_A2/ZN (AND2_X1)
+   0.0365    2.2281 v u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1_A2_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0733    2.3013 ^ u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1/ZN (NOR2_X1)
+   0.0610    2.3623 ^ u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1_ZN_AND3_X1_A3/ZN (AND3_X1)
+   0.0118    2.3741 v u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1_ZN_AND3_X1_A3_ZN_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0584    2.4325 ^ u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1_ZN_AND3_X1_A3_ZN_AOI211_X1_C2/ZN (AOI211_X1)
+   0.0000    2.4325 ^ u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1_ZN_AND3_X1_A3_ZN_AOI211_X1_C2_ZN_DFFR_X1_D/D (DFFR_X1)
+             2.4325   data arrival time
+
+  40.0000   40.0000   clock rx_clk (rise edge)
+   0.0000   40.0000   clock network delay (ideal)
+  -0.1000   39.9000   clock uncertainty
+   0.0000   39.9000   clock reconvergence pessimism
+            39.9000 ^ u_ethmac.LatchedMRxErr_DFFR_X1_Q_D_AOI21_X1_ZN_B1_AOI21_X1_B1_B2_NAND3_X1_ZN_A3_OR3_X1_ZN_A1_NOR2_X1_A1_1_ZN_AND3_X1_A3_ZN_AOI211_X1_C2_ZN_DFFR_X1_D/CK (DFFR_X1)
+  -0.0374   39.8626   library setup time
+            39.8626   data required time
+-------------------------------------------------------------
+            39.8626   data required time
+            -2.4325   data arrival time
+-------------------------------------------------------------
+            37.4301   slack (MET)
+
+
+Startpoint: rx_clk_div2_o_DFFR_X1_CK_14
+            (rising edge-triggered flip-flop clocked by rx_clk_div2)
+Endpoint: rx_clk_div2_o_DFFR_X1_CK
+          (rising edge-triggered flip-flop clocked by rx_clk_div2)
+Path Group: rx_clk_div2
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock rx_clk_div2 (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ rx_clk_div2_o_DFFR_X1_CK_14/CK (DFFR_X1)
+   0.1256    0.1256 ^ rx_clk_div2_o_DFFR_X1_CK_14/Q (DFFR_X1)
+   0.0294    0.1550 v rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0395    0.1945 ^ rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0459    0.2403 ^ rx_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_2_B_AND2_X1_A2/ZN (AND2_X1)
+   0.0290    0.2693 v rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_7_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0514    0.3207 ^ rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_7_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.3525 v rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_8_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0519    0.4044 ^ rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_8_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.4361 v rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_5_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0434    0.4796 ^ rx_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0187    0.4983 v rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_4_B_NAND2_X1_ZN/ZN (NAND2_X1)
+   0.0290    0.5273 ^ rx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_4/ZN (XNOR2_X1)
+   0.0000    0.5273 ^ rx_clk_div2_o_DFFR_X1_CK/D (DFFR_X1)
+             0.5273   data arrival time
+
+  80.0000   80.0000   clock rx_clk_div2 (rise edge)
+   0.0000   80.0000   clock network delay (ideal)
+  -0.1000   79.9000   clock uncertainty
+   0.0000   79.9000   clock reconvergence pessimism
+            79.9000 ^ rx_clk_div2_o_DFFR_X1_CK/CK (DFFR_X1)
+  -0.0336   79.8664   library setup time
+            79.8664   data required time
+-------------------------------------------------------------
+            79.8664   data required time
+            -0.5273   data arrival time
+-------------------------------------------------------------
+            79.3391   slack (MET)
+
+
+Startpoint: mtxen_pad_o_DFFR_X1_Q
+            (rising edge-triggered flip-flop clocked by tx_clk)
+Endpoint: mtxen_pad_o (output port clocked by tx_clk)
+Path Group: tx_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock tx_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ mtxen_pad_o_DFFR_X1_Q/CK (DFFR_X1)
+   0.1204    0.1204 ^ mtxen_pad_o_DFFR_X1_Q/Q (DFFR_X1)
+   0.0000    0.1204 ^ mtxen_pad_o (out)
+             0.1204   data arrival time
+
+  40.0000   40.0000   clock tx_clk (rise edge)
+   0.0000   40.0000   clock network delay (ideal)
+  -0.1000   39.9000   clock uncertainty
+   0.0000   39.9000   clock reconvergence pessimism
+  -2.0000   37.9000   output external delay
+            37.9000   data required time
+-------------------------------------------------------------
+            37.9000   data required time
+            -0.1204   data arrival time
+-------------------------------------------------------------
+            37.7796   slack (MET)
+
+
+Startpoint: tx_clk_div2_o_DFFR_X1_CK_13
+            (rising edge-triggered flip-flop clocked by tx_clk_div2)
+Endpoint: tx_clk_div2_o_DFFR_X1_CK_15
+          (rising edge-triggered flip-flop clocked by tx_clk_div2)
+Path Group: tx_clk_div2
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock tx_clk_div2 (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ tx_clk_div2_o_DFFR_X1_CK_13/CK (DFFR_X1)
+   0.1256    0.1256 ^ tx_clk_div2_o_DFFR_X1_CK_13/Q (DFFR_X1)
+   0.0294    0.1550 v tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_2_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0395    0.1945 ^ tx_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_3_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0459    0.2403 ^ tx_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_3_B_AND2_X1_A2/ZN (AND2_X1)
+   0.0290    0.2693 v tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_5_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0514    0.3207 ^ tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_5_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.3525 v tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_3_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0519    0.4044 ^ tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_3_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.4361 v tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_1_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0434    0.4796 ^ tx_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_5_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0187    0.4983 v tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_6_B_NAND2_X1_ZN/ZN (NAND2_X1)
+   0.0290    0.5273 ^ tx_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_6/ZN (XNOR2_X1)
+   0.0000    0.5273 ^ tx_clk_div2_o_DFFR_X1_CK_15/D (DFFR_X1)
+             0.5273   data arrival time
+
+  80.0000   80.0000   clock tx_clk_div2 (rise edge)
+   0.0000   80.0000   clock network delay (ideal)
+  -0.1000   79.9000   clock uncertainty
+   0.0000   79.9000   clock reconvergence pessimism
+            79.9000 ^ tx_clk_div2_o_DFFR_X1_CK_15/CK (DFFR_X1)
+  -0.0336   79.8664   library setup time
+            79.8664   data required time
+-------------------------------------------------------------
+            79.8664   data required time
+            -0.5273   data arrival time
+-------------------------------------------------------------
+            79.3391   slack (MET)
+
+
+Startpoint: u_ethmac.PerPacketCrcEn_DFFR_X1_Q_D_OAI21_X1_ZN_B1_OAI21_X1_ZN_B2_AOI21_X1_ZN_B1_OAI21_X1_ZN_B2_AOI21_X1_ZN_B1_NAND3_X1_ZN_A3_OAI21_X1_ZN_B1_AOI221_X1_ZN_B1_DFF_X1_QN
+            (rising edge-triggered flip-flop clocked by wb_clk)
+Endpoint: u_ethmac.wishbone.TxDonePacket_OAI21_X1_B2_A_NAND2_X1_ZN_A1_OAI211_X1_ZN_C1_NAND2_X1_ZN_A1_OAI21_X1_A_B2_AOI21_X1_B1_ZN_AOI221_X1_A_ZN_OAI21_X1_B1_A_AOI21_X1_ZN_A_NOR2_X1_ZN_A2_INV_X1_A_ZN_NOR4_X1_A2_ZN_AOI211_X1_C2_ZN_OR2_X1_A2_ZN_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by wb_clk)
+Path Group: wb_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock wb_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ u_ethmac.PerPacketCrcEn_DFFR_X1_Q_D_OAI21_X1_ZN_B1_OAI21_X1_ZN_B2_AOI21_X1_ZN_B1_OAI21_X1_ZN_B2_AOI21_X1_ZN_B1_NAND3_X1_ZN_A3_OAI21_X1_ZN_B1_AOI221_X1_ZN_B1_DFF_X1_QN/CK (DFF_X1)
+  14.8060   14.8060 ^ u_ethmac.PerPacketCrcEn_DFFR_X1_Q_D_OAI21_X1_ZN_B1_OAI21_X1_ZN_B2_AOI21_X1_ZN_B1_OAI21_X1_ZN_B2_AOI21_X1_ZN_B1_NAND3_X1_ZN_A3_OAI21_X1_ZN_B1_AOI221_X1_ZN_B1_DFF_X1_QN/Q (DFF_X1)
+  72.6060   87.4119 v u_ethmac.PerPacketCrcEn_DFFR_X1_Q_D_OAI21_X1_ZN_B1_OAI21_X1_ZN_B1_NOR3_X1_ZN_A2_AOI211_X1_ZN_C2_OAI21_X1_ZN_B1_AOI221_X1_ZN_A_INV_X1_ZN/ZN (INV_X1)
+  10.0691   97.4810 ^ u_ethmac.wishbone.TxEndFrm_wb_AOI22_X1_A1_B2_NOR3_X1_ZN_A2_OAI33_X1_B1_A3_NOR2_X1_A2_ZN_OAI221_X1_B1_A_OAI21_X1_ZN_B2_AOI211_X1_C1_B_AOI211_X1_C2_ZN_OAI211_X1_B_ZN_NAND3_X1_A3_A1_NAND2_X1_ZN_A2_AOI21_X1_ZN_B2_OAI21_X1_ZN_B2_AOI211_X1_ZN_B_AOI21_X1_ZN_B1_OAI211_X1_ZN_C2_AOI211_X1_ZN/ZN (AOI211_X1)
+   0.1238   97.6048 v u_ethmac.wishbone.TxEndFrm_wb_AOI22_X1_A1_B2_NOR3_X1_ZN_A2_OAI33_X1_B1_A3_NOR2_X1_A2_ZN_OAI221_X1_B1_A_OAI21_X1_ZN_B2_AOI211_X1_C1_B_AOI211_X1_C2_ZN_OAI211_X1_B_ZN_NAND3_X1_A3_A1_NAND2_X1_ZN_A2_AOI21_X1_ZN_B2_OAI21_X1_ZN_B2_AOI211_X1_ZN_B_AOI21_X1_ZN_B1_OAI211_X1_ZN/ZN (OAI211_X1)
+   0.1684   97.7732 ^ u_ethmac.wishbone.TxEndFrm_wb_AOI22_X1_A1_B2_NOR3_X1_ZN_A2_OAI33_X1_B1_A3_NOR2_X1_A2_ZN_OAI221_X1_B1_A_OAI21_X1_ZN_B2_AOI211_X1_C1_B_AOI211_X1_C2_ZN_OAI211_X1_B_ZN_NAND3_X1_A3_A1_NAND2_X1_ZN_A2_AOI21_X1_ZN_B2_OAI21_X1_ZN_B2_AOI211_X1_ZN_B_AOI21_X1_ZN/ZN (AOI21_X1)
+   0.0209   97.7941 v u_ethmac.wishbone.TxEndFrm_wb_AOI22_X1_A1_B2_NOR3_X1_ZN_A2_OAI33_X1_B1_A3_NOR2_X1_A2_ZN_OAI221_X1_B1_A_OAI21_X1_ZN_B2_AOI211_X1_C1_B_AOI211_X1_C2_ZN_OAI211_X1_B_ZN_NAND3_X1_A3_A1_NAND2_X1_ZN_A2_AOI21_X1_ZN_B2_OAI21_X1_ZN_B2_AOI211_X1_ZN/ZN (AOI211_X1)
+   0.0495   97.8436 ^ u_ethmac.wishbone.TxEndFrm_wb_AOI22_X1_A1_B2_NOR3_X1_ZN_A2_OAI33_X1_B1_A3_NOR2_X1_A2_ZN_OAI221_X1_B1_A_OAI21_X1_ZN_B2_AOI211_X1_C1_B_AOI211_X1_C2_ZN_OAI211_X1_B_ZN_NAND3_X1_A3_A1_NAND2_X1_ZN_A2_AOI21_X1_ZN_B2_OAI21_X1_ZN/ZN (OAI21_X1)
+   0.0263   97.8699 v u_ethmac.wishbone.TxEndFrm_wb_AOI22_X1_A1_B2_NOR3_X1_ZN_A2_OAI33_X1_B1_A3_NOR2_X1_A2_ZN_OAI221_X1_B1_A_OAI21_X1_ZN_B2_AOI211_X1_C1_B_AOI211_X1_C2_ZN_OAI211_X1_B_ZN_NAND3_X1_A3_A1_NAND2_X1_ZN_A2_AOI21_X1_ZN/ZN (AOI21_X1)
+   1.4700   99.3399 ^ u_ethmac.wishbone.TxEndFrm_wb_AOI22_X1_A1_B2_NOR3_X1_ZN_A2_OAI33_X1_B1_A3_NOR2_X1_A2_ZN_OAI221_X1_B1_A_OAI21_X1_ZN_B2_AOI211_X1_C1_B_AOI211_X1_C2_ZN_OAI211_X1_B_ZN_NAND3_X1_A3_A1_NAND2_X1_ZN_A2_NOR3_X1_A2/ZN (NOR3_X1)
+  -0.0264   99.3135 v u_ethmac.wishbone.TxDonePacket_OAI21_X1_B2_A_NAND2_X1_ZN_A1_OAI211_X1_ZN_C1_NAND2_X1_ZN_A1_OAI21_X1_A_B2_AOI21_X1_B1_ZN_AOI221_X1_A_ZN_OAI21_X1_B1_A_AOI21_X1_ZN_A_NOR2_X1_ZN_A2_INV_X1_A_ZN_NOR4_X1_A2_ZN_AOI211_X1_C2/ZN (AOI211_X1)
+   0.1073   99.4208 v u_ethmac.wishbone.TxDonePacket_OAI21_X1_B2_A_NAND2_X1_ZN_A1_OAI211_X1_ZN_C1_NAND2_X1_ZN_A1_OAI21_X1_A_B2_AOI21_X1_B1_ZN_AOI221_X1_A_ZN_OAI21_X1_B1_A_AOI21_X1_ZN_A_NOR2_X1_ZN_A2_INV_X1_A_ZN_NOR4_X1_A2_ZN_AOI211_X1_C2_ZN_OR2_X1_A2/ZN (OR2_X1)
+   0.0000   99.4208 v u_ethmac.wishbone.TxDonePacket_OAI21_X1_B2_A_NAND2_X1_ZN_A1_OAI211_X1_ZN_C1_NAND2_X1_ZN_A1_OAI21_X1_A_B2_AOI21_X1_B1_ZN_AOI221_X1_A_ZN_OAI21_X1_B1_A_AOI21_X1_ZN_A_NOR2_X1_ZN_A2_INV_X1_A_ZN_NOR4_X1_A2_ZN_AOI211_X1_C2_ZN_OR2_X1_A2_ZN_DFFR_X1_D/D (DFFR_X1)
+            99.4208   data arrival time
+
+ 220.0000  220.0000   clock wb_clk (rise edge)
+   0.0000  220.0000   clock network delay (ideal)
+  -0.1000  219.9000   clock uncertainty
+   0.0000  219.9000   clock reconvergence pessimism
+           219.9000 ^ u_ethmac.wishbone.TxDonePacket_OAI21_X1_B2_A_NAND2_X1_ZN_A1_OAI211_X1_ZN_C1_NAND2_X1_ZN_A1_OAI21_X1_A_B2_AOI21_X1_B1_ZN_AOI221_X1_A_ZN_OAI21_X1_B1_A_AOI21_X1_ZN_A_NOR2_X1_ZN_A2_INV_X1_A_ZN_NOR4_X1_A2_ZN_AOI211_X1_C2_ZN_OR2_X1_A2_ZN_DFFR_X1_D/CK (DFFR_X1)
+  -0.0267  219.8733   library setup time
+           219.8733   data required time
+-------------------------------------------------------------
+           219.8733   data required time
+           -99.4208   data arrival time
+-------------------------------------------------------------
+           120.4525   slack (MET)
+
+
+Startpoint: wb_clk_div2_o_DFFR_X1_CK_13
+            (rising edge-triggered flip-flop clocked by wb_clk_div2)
+Endpoint: wb_clk_div2_o_DFFR_X1_CK_15
+          (rising edge-triggered flip-flop clocked by wb_clk_div2)
+Path Group: wb_clk_div2
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock wb_clk_div2 (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ wb_clk_div2_o_DFFR_X1_CK_13/CK (DFFR_X1)
+   0.1256    0.1256 ^ wb_clk_div2_o_DFFR_X1_CK_13/Q (DFFR_X1)
+   0.0294    0.1550 v wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_6_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0395    0.1945 ^ wb_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_2_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0459    0.2403 ^ wb_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_2_B_AND2_X1_A2/ZN (AND2_X1)
+   0.0290    0.2693 v wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_8_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0514    0.3207 ^ wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_8_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.3525 v wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_7_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0519    0.4044 ^ wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_7_B_NOR2_X1_A2/ZN (NOR2_X1)
+   0.0318    0.4361 v wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_1_B_NAND3_X1_ZN/ZN (NAND3_X1)
+   0.0434    0.4796 ^ wb_clk_div2_o_DFFR_X1_CK_D_XOR2_X1_Z_B_NOR2_X1_ZN/ZN (NOR2_X1)
+   0.0187    0.4983 v wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_2_B_NAND2_X1_ZN/ZN (NAND2_X1)
+   0.0290    0.5273 ^ wb_clk_div2_o_DFFR_X1_CK_D_XNOR2_X1_ZN_2/ZN (XNOR2_X1)
+   0.0000    0.5273 ^ wb_clk_div2_o_DFFR_X1_CK_15/D (DFFR_X1)
+             0.5273   data arrival time
+
+ 440.0000  440.0000   clock wb_clk_div2 (rise edge)
+   0.0000  440.0000   clock network delay (ideal)
+  -0.1000  439.9000   clock uncertainty
+   0.0000  439.9000   clock reconvergence pessimism
+           439.9000 ^ wb_clk_div2_o_DFFR_X1_CK_15/CK (DFFR_X1)
+  -0.0336  439.8664   library setup time
+           439.8664   data required time
+-------------------------------------------------------------
+           439.8664   data required time
+            -0.5273   data arrival time
+-------------------------------------------------------------
+           439.3391   slack (MET)
+
+

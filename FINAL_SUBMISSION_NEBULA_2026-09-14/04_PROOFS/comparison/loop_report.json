@@ -1,0 +1,58 @@
+{
+  "baseline_run_id": "20260913T160717Z_baseline",
+  "accepted": [
+    "cand_0001_06c207",
+    "cand_0003_420a7f"
+  ],
+  "stop_reason": "iteration budget reached",
+  "iterations": [
+    {
+      "index": 1,
+      "candidate_id": "cand_0001_06c207",
+      "transformation": "balanced_adder_tree",
+      "verdict": "ACCEPTED",
+      "failure_class": "NONE",
+      "measured_delta": {
+        "wns": 0.09479,
+        "tns": 3.4968,
+        "cell_count": -100.0,
+        "cell_area": -142.0
+      },
+      "stage_statuses": {
+        "screen": "PASS",
+        "eqy": "PASS"
+      }
+    },
+    {
+      "index": 2,
+      "candidate_id": "cand_0002_bcf502",
+      "transformation": "boolean_reassociation",
+      "verdict": "REJECTED",
+      "failure_class": "QOR_REGRESSION",
+      "measured_delta": {
+        "wns": 0.0,
+        "cell_area": 55.328
+      },
+      "stage_statuses": {
+        "screen": "PASS"
+      }
+    },
+    {
+      "index": 3,
+      "candidate_id": "cand_0003_420a7f",
+      "transformation": "balanced_adder_tree",
+      "verdict": "ACCEPTED",
+      "failure_class": "NONE",
+      "measured_delta": {
+        "wns": 0.09479,
+        "tns": 3.4968,
+        "cell_count": -100.0,
+        "cell_area": -142.0
+      },
+      "stage_statuses": {
+        "screen": "PASS",
+        "eqy": "PASS"
+      }
+    }
+  ]
+}

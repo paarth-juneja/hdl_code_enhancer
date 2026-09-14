@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "analysis_id": "20260913T160717Z_baseline_synth_sta",
+  "run_id": "20260913T160717Z_baseline",
+  "stage": "synth",
+  "corner": "typical",
+  "check_type": "setup",
+  "status": "PASS",
+  "units": {
+    "time": "ns",
+    "capacitance": "pF",
+    "resistance": "kOhm"
+  },
+  "clocks": [
+    "wb_clk",
+    "tx_clk",
+    "rx_clk",
+    "aux0_clk",
+    "aux1_clk",
+    "wb_clk_div2",
+    "tx_clk_div2",
+    "rx_clk_div2",
+    "aux0_clk_div2",
+    "aux1_clk_div2"
+  ],
+  "generated_clocks": [],
+  "asynchronous_groups": [],
+  "wns": {
+    "value": -0.02533162640239213,
+    "unit": "ns"
+  },
+  "tns": {
+    "value": -1.1504016953550156,
+    "unit": "ns"
+  },
+  "violation_count": 10,
+  "unconstrained_endpoint_count": 10,
+  "critical_path_ids": [
+    "20260913T160717Z_baseline_synth_sta_path_0001",
+    "20260913T160717Z_baseline_synth_sta_path_0002",
+    "20260913T160717Z_baseline_synth_sta_path_0003",
+    "20260913T160717Z_baseline_synth_sta_path_0004",
+    "20260913T160717Z_baseline_synth_sta_path_0005",
+    "20260913T160717Z_baseline_synth_sta_path_0006",
+    "20260913T160717Z_baseline_synth_sta_path_0007",
+    "20260913T160717Z_baseline_synth_sta_path_0008",
+    "20260913T160717Z_baseline_synth_sta_path_0009",
+    "20260913T160717Z_baseline_synth_sta_path_0010"
+  ],
+  "report_artifact": "/home/juneja/nebula/benchmarks/ethmac5/runs/20260913T160717Z_baseline/20_sta/timing.rpt",
+  "parser_version": "1.0.0",
+  "parser_warnings": [],
+  "provenance": {
+    "produced_by": "parsers.opensta_timing",
+    "tool_version": null,
+    "command": [],
+    "artifact_paths": [
+      "/home/juneja/nebula/benchmarks/ethmac5/runs/20260913T160717Z_baseline/20_sta/timing.rpt"
+    ],
+    "input_hashes": {},
+    "created_at": "2026-09-13T16:08:12Z",
+    "backend": "unknown"
+  }
+}

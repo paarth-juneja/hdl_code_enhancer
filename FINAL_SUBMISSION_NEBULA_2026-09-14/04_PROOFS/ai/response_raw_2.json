@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "recommendation_id": "rec_0001",
+  "request_id": "req_0002",
+  "model_record_id": "",
+  "transformation_type": "boolean_reassociation",
+  "action": "patch",
+  "target": {},
+  "observation_refs": [
+    "20260913T160717Z_baseline_synth_sta_path_0001"
+  ],
+  "hypothesis": "Reassociating the long XOR reduction chain into a single balanced expression reduces combinational depth, increasing timing slack on the critical path.",
+  "rationale": "The critical path consists of a linear series of seven 32‑bit XORs (mix0..mix6). By collapsing these into one XOR of all operands (mix_all) the logic depth is reduced from 7 to a single level (or a balanced tree synthesized by the tool), preserving functionality because XOR is associative and commutative. No latency, interface, reset, or clock behavior is altered.",
+  "preconditions": [
+    "WIDTH >= 256"
+  ],
+  "predicted_effects": [
+    {
+      "metric": "wns",
+      "direction": "increase",
+      "confidence_band": "high",
+      "basis": "Reduced XOR chain depth from 7 to 1 (or balanced tree depth ~3) lowers combinational delay on the critical path."
+    },
+    {
+      "metric": "tns",
+      "direction": "increase",
+      "confidence_band": "high",
+      "basis": "Same reasoning as wns; overall timing margin improves."
+    }]}

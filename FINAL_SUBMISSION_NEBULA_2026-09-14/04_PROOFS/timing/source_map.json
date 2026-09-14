@@ -1,0 +1,285 @@
+{
+  "index_size": 8745,
+  "paths": [
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0001",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0002",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3222",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0003",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3221",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0004",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0005",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3220",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0006",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3219",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0007",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3218",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0008",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3217",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0009",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3216",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    },
+    {
+      "path_id": "20260913T160717Z_baseline_synth_sta_path_0010",
+      "mapping_status": "endpoints_only",
+      "startpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_clk_i_DFFR_X1_CK_3215",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "endpoint_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      },
+      "dominant_source": {
+        "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+        "line_start": 26,
+        "line_end": 36,
+        "netlist_object": "aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D",
+        "confidence": 0.95,
+        "method": "src_attribute"
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "recommendation_id": "rec_0001",
+  "request_id": "req_0003",
+  "transformation_type": "balanced_adder_tree",
+  "action": "patch",
+  "target": {},
+  "observation_refs": [
+    "20260913T160717Z_baseline_synth_sta_path_0001"
+  ],
+  "hypothesis": "",
+  "rationale": "Replace the linear XOR reduction chain with a balanced XOR tree, preserving functionality while reducing logic depth from 14 to 3 levels, which should improve timing slack.",
+  "preconditions": [
+    "WIDTH >= 256"
+  ],
+  "predicted_effects": [
+    {
+      "metric": "wns",
+      "direction": "increase",
+      "confidence_band": "high",
+      "basis": "Reduced XOR logic depth from 14 to 3 levels"
+    },
+    {
+      "metric": "tns",
+      "direction": "increase",
+      "confidence_band": "high",
+      "basis": "Reduced combinational depth on critical path"
+    }]}

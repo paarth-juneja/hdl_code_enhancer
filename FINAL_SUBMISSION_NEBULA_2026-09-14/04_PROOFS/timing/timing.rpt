@@ -1,0 +1,351 @@
+Warning 503: sta.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
+Startpoint: aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1257    0.1257 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0517    0.1774 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2223 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2665 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3065 ^ aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3424 ^ aux0_seed_i_MUX2_X1_B/Z (MUX2_X1)
+   0.0000    0.3424 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3424   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3424   data arrival time
+-------------------------------------------------------------
+            -0.0253   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3222
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3222/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3222/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_10/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3221
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3221/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3221/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_11/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_12/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3220
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3220/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3220/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_13/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3219
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3219/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3219/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_14/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3218
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3218/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3218/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_15/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3217
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3217/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3217/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_16/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3216
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3216/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3216/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_17/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+
+Startpoint: aux0_clk_i_DFFR_X1_CK_3215
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D
+          (rising edge-triggered flip-flop clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_clk_i_DFFR_X1_CK_3215/CK (DFFR_X1)
+   0.1204    0.1204 ^ aux0_clk_i_DFFR_X1_CK_3215/Q (DFFR_X1)
+   0.0521    0.1725 ^ aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z (XOR2_X1)
+   0.0449    0.2173 ^ aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0442    0.2615 ^ aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0400    0.3015 ^ aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN/ZN (XNOR2_X1)
+   0.0360    0.3375 ^ aux0_seed_i_MUX2_X1_B_18/Z (MUX2_X1)
+   0.0000    0.3375 ^ aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D/D (DFFR_X1)
+             0.3375   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+             0.3500 ^ aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D/CK (DFFR_X1)
+  -0.0329    0.3171   library setup time
+             0.3171   data required time
+-------------------------------------------------------------
+             0.3171   data required time
+            -0.3375   data arrival time
+-------------------------------------------------------------
+            -0.0204   slack (VIOLATED)
+
+

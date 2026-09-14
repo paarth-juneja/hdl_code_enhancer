@@ -1,0 +1,291 @@
+Warning 503: sta.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
+Startpoint: aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[10] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_11/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[10] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[11] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_12/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[11] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[12] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_13/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[12] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[13] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_14/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[13] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[14] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_15/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[14] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[15] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_16/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[15] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[16] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_17/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[16] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[17] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_18/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[17] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_19_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[18] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_19_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_19_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_19/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[18] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+
+Startpoint: aux0_seed_i_MUX2_X1_B_20_Z_DFFR_X1_D
+            (rising edge-triggered flip-flop clocked by aux0_clk)
+Endpoint: aux0_digest_o[19] (output port clocked by aux0_clk)
+Path Group: aux0_clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock aux0_clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ aux0_seed_i_MUX2_X1_B_20_Z_DFFR_X1_D/CK (DFFR_X1)
+   0.1254    0.1254 ^ aux0_seed_i_MUX2_X1_B_20_Z_DFFR_X1_D/Q (DFFR_X1)
+   0.0404    0.1658 ^ aux0_digest_o_XOR2_X1_Z_20/Z (XOR2_X1)
+   0.0000    0.1658 ^ aux0_digest_o[19] (out)
+             0.1658   data arrival time
+
+   0.4500    0.4500   clock aux0_clk (rise edge)
+   0.0000    0.4500   clock network delay (ideal)
+  -0.1000    0.3500   clock uncertainty
+   0.0000    0.3500   clock reconvergence pessimism
+  -0.2000    0.1500   output external delay
+             0.1500   data required time
+-------------------------------------------------------------
+             0.1500   data required time
+            -0.1658   data arrival time
+-------------------------------------------------------------
+            -0.0158   slack (VIOLATED)
+
+

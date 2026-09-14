@@ -1,0 +1,1872 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0001",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 1,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0253,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3424,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1257,
+        "cumulative_delay": 0.1257,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0517,
+        "cumulative_delay": 0.1774,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2223,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2665,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3065,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3424,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3424,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      102,
+      1812
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0002",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 2,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3222"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3222/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3222/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_10_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_10/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3222",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_10_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      1812,
+      3525
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0003",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 3,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3221"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3221/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3221/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_11_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_11/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3221",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_11_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      3525,
+      5238
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0004",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 4,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_12_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_12/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_12_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      5238,
+      6936
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0005",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 5,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3220"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3220/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3220/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_13_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_13/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3220",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_13_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      6936,
+      8649
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0006",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 6,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3219"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3219/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3219/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_14_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_14/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3219",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_14_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      8649,
+      10362
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0007",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 7,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3218"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3218/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3218/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_15_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_15/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3218",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_15_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      10362,
+      12075
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0008",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 8,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3217"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3217/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3217/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_16_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_16/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3217",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_16_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      12075,
+      13788
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0009",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 9,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3216"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3216/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3216/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_17_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_17/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3216",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_17_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      13788,
+      15501
+    ]
+  },
+  {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0010",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 10,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0204,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3375,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_clk_i_DFFR_X1_CK_3215"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3215/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_clk_i_DFFR_X1_CK_3215/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1204,
+        "cumulative_delay": 0.1204,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0521,
+        "cumulative_delay": 0.1725,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2173,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2615,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_18_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3015,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B_18/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3375,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_clk_i_DFFR_X1_CK_3215",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_18_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      15501,
+      17214
+    ]
+  }
+]

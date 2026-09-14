@@ -1,0 +1,7 @@
+Packaging date: 2026-09-14
+Source commit: 040eb0d
+Python: 3.12.3
+Docker: 29.1.3
+Physical platform: Nangate45
+Formal engine: EQY
+Synthesis/STA/physical flow: Yosys, OpenSTA, OpenROAD-flow-scripts

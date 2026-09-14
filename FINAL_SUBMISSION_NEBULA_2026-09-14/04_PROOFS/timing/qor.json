@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20260913T160717Z_baseline",
+  "stage": "synth",
+  "cell_count": 51359,
+  "cell_area": {
+    "value": 127968.344,
+    "unit": "um^2"
+  },
+  "die_area": {
+    "value": null,
+    "unit": "um^2"
+  },
+  "power": {
+    "value": null,
+    "unit": "mW"
+  },
+  "activity_source": null,
+  "max_frequency": {
+    "value": null,
+    "unit": "MHz"
+  },
+  "provenance": {
+    "produced_by": "parsers.yosys_stat",
+    "tool_version": null,
+    "command": [],
+    "artifact_paths": [
+      "/home/juneja/nebula/benchmarks/ethmac5/runs/20260913T160717Z_baseline/10_synth/synth_stat.txt"
+    ],
+    "input_hashes": {},
+    "created_at": "2026-09-13T16:08:12Z",
+    "backend": "unknown"
+  }
+}

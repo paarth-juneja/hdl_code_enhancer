@@ -1,0 +1,6 @@
+{
+  "verdict": "ACCEPTED",
+  "reasons": [
+    "equivalence PASS; wns +0.09479 ns; area -0.102% within 5.0%"
+  ]
+}

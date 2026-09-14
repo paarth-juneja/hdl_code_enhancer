@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "recommendation_id": "rec_0001",
+  "request_id": "req_0001",
+  "model_record_id": "",
+  "transformation_type": "balanced_adder_tree",
+  "action": "patch",
+  "target": {},
+  "observation_refs": [
+    "20260913T160717Z_baseline_synth_sta_path_0001"
+  ],
+  "hypothesis": "",
+  "rationale": "The critical path traverses a linear chain of seven 32\u2011bit XOR operations (mix0 \u2026 mix6). XOR is associative, so the chain can be re\u2011structured into a balanced tree, reducing the combinational depth from 7 to ~3 levels without changing functionality, latency, or interface.",
+  "preconditions": [],
+  "predicted_effects": [
+    {
+      "metric": "wns",
+      "direction": "increase",
+      "confidence_band": "high",
+      "basis": "balanced XOR tree reduces logic depth, likely improving slack"
+    }
+  ],
+  "risks": [],
+  "invariants_claimed": [
+    "interfaces unchanged",
+    "latency unchanged",
+    "reset unchanged",
+    "clock unchanged",
+    "cdc forbidden"
+  ],
+  "validation_plan": [],
+  "patch": {
+    "schema_version": "1.0.0",
+    "patch_id": "patch_0001",
+    "recommendation_id": "rec_0001",
+    "base_source_hash": "UNKNOWN",
+    "format": "unified_diff",
+    "diff_text": "--- a/rtl/nebula_aux_domain.v\n+++ b/rtl/nebula_aux_domain.v\n@@\n-    wire [31:0] mix0 = state[31:0]   ^ state[63:32];\n-    wire [31:0] mix1 = mix0          ^ state[95:64];\n-    wire [31:0] mix2 = mix1          ^ state[127:96];\n-    wire [31:0] mix3 = mix2          ^ state[159:128];\n-    wire [31:0] mix4 = mix3          ^ state[191:160];\n-    wire [31:0] mix5 = mix4          ^ state[223:192];\n-    wire [31:0] mix6 = mix5          ^ state[255:224];\n+    // Balanced XOR tree for the seven 32\u2011bit slices of the state vector.\n+    wire [31:0] xor0 = state[31:0]   ^ state[63:32];\n+    wire [31:0] xor1 = state[95:64] ^ state[127:96];\n+    wire [31:0] xor2 = state[159:128] ^ state[191:160];\n+    wire [31:0] xor3 = state[223:192] ^ state[255:224];\n+    wire [31:0] xor4 = xor0 ^ xor1;\n+    wire [31:0] xor5 = xor2 ^ xor3;\n+    wire [31:0] mix6 = xor4 ^ xor5;\n*** End Patch",
+    "changed_files": [
+      "rtl/nebula_aux_domain.v"
+    ],
+    "changed_line_count": 14,
+    "touched_identifiers": [
+      "mix0",
+      "mix1",
+      "mix2",
+      "mix3",
+      "mix4",
+      "mix5",
+      "mix6",
+      "xor0",
+      "xor1",
+      "xor2",
+      "xor3",
+      "xor4",
+      "xor5"
+    ],
+    "declared_semantic_class": "cycle_exact",
+    "latency_delta": 0,
+    "interface_delta": false,
+    "clock_reset_cdc_touch_flags": {
+      "clock": false,
+      "reset": false,
+      "cdc": false
+    },
+    "apply_status": "not_attempted",
+    "static_validation_results": []
+  },
+  "uncertainty": 0.1,
+  "abstention_reason": null,
+  "schema_validation": "not_validated",
+  "token_usage": {},
+  "estimated_cost": {
+    "value": null,
+    "unit": "USD"
+  }
+}

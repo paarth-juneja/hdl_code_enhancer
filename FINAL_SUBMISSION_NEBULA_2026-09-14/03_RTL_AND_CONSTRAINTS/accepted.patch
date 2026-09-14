@@ -1,0 +1,17 @@
+--- a/rtl/nebula_aux_domain.v
++++ b/rtl/nebula_aux_domain.v
+@@
+-    wire [31:0] mix0 = state[31:0]   ^ state[63:32];
+-    wire [31:0] mix1 = mix0          ^ state[95:64];
+-    wire [31:0] mix2 = mix1          ^ state[127:96];
+-    wire [31:0] mix3 = mix2          ^ state[159:128];
+-    wire [31:0] mix4 = mix3          ^ state[191:160];
+-    wire [31:0] mix5 = mix4          ^ state[223:192];
+-    wire [31:0] mix6 = mix5          ^ state[255:224];
++    wire [31:0] xor0 = state[31:0]    ^ state[63:32];
++    wire [31:0] xor1 = state[95:64]   ^ state[127:96];
++    wire [31:0] xor2 = state[159:128] ^ state[191:160];
++    wire [31:0] xor3 = state[223:192] ^ state[255:224];
++    wire [31:0] xor4 = xor0 ^ xor1;
++    wire [31:0] xor5 = xor2 ^ xor3;
++    wire [31:0] mix6 = xor4 ^ xor5;

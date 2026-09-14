@@ -1,0 +1,282 @@
+{
+  "schema_version": "1.0.0",
+  "request_id": "req_0002",
+  "project_id": "ethmac5",
+  "parent_candidate_id": "baseline",
+  "iteration": 2,
+  "facts": {
+    "timing_summary": {
+      "wns": {
+        "value": -0.02533162640239213,
+        "unit": "ns"
+      },
+      "tns": {
+        "value": -1.1504016953550156,
+        "unit": "ns"
+      },
+      "violating_endpoints": 10,
+      "unconstrained_endpoints": 10
+    },
+    "clocks": [
+      "wb_clk",
+      "tx_clk",
+      "rx_clk",
+      "aux0_clk",
+      "aux1_clk",
+      "wb_clk_div2",
+      "tx_clk_div2",
+      "rx_clk_div2",
+      "aux0_clk_div2",
+      "aux1_clk_div2"
+    ],
+    "constraint_summary": {
+      "launch_clock": "aux0_clk",
+      "capture_clock": "aux0_clk",
+      "relationship": "same_domain",
+      "logic_depth": 14
+    }
+  },
+  "critical_path": {
+    "schema_version": "1.0.0",
+    "path_id": "20260913T160717Z_baseline_synth_sta_path_0001",
+    "analysis_id": "20260913T160717Z_baseline_synth_sta",
+    "rank": 1,
+    "check_type": "setup",
+    "slack": {
+      "value": -0.0253,
+      "unit": "ns"
+    },
+    "arrival": {
+      "value": 0.3424,
+      "unit": "ns"
+    },
+    "required": {
+      "value": 0.3171,
+      "unit": "ns"
+    },
+    "startpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D"
+    },
+    "endpoint": {
+      "object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D"
+    },
+    "launch_clock": "aux0_clk",
+    "capture_clock": "aux0_clk",
+    "relationship": "same_domain",
+    "elements": [
+      {
+        "order": 9,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 10,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 11,
+        "pin": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/CK",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.0,
+        "source_link": null
+      },
+      {
+        "order": 12,
+        "pin": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/Q",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.1257,
+        "cumulative_delay": 0.1257,
+        "source_link": null
+      },
+      {
+        "order": 13,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XOR2_X1_Z/Z",
+        "instance": null,
+        "cell_type": "XOR2_X1",
+        "incr_delay": 0.0517,
+        "cumulative_delay": 0.1774,
+        "source_link": null
+      },
+      {
+        "order": 14,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0449,
+        "cumulative_delay": 0.2223,
+        "source_link": null
+      },
+      {
+        "order": 15,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN_B_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.0442,
+        "cumulative_delay": 0.2665,
+        "source_link": null
+      },
+      {
+        "order": 16,
+        "pin": "aux0_seed_i_MUX2_X1_B_A_XNOR2_X1_ZN/ZN",
+        "instance": null,
+        "cell_type": "XNOR2_X1",
+        "incr_delay": 0.04,
+        "cumulative_delay": 0.3065,
+        "source_link": null
+      },
+      {
+        "order": 17,
+        "pin": "aux0_seed_i_MUX2_X1_B/Z",
+        "instance": null,
+        "cell_type": "MUX2_X1",
+        "incr_delay": 0.036,
+        "cumulative_delay": 0.3424,
+        "source_link": null
+      },
+      {
+        "order": 18,
+        "pin": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D/D",
+        "instance": null,
+        "cell_type": "DFFR_X1",
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.3424,
+        "source_link": null
+      },
+      {
+        "order": 21,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.45,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 22,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.45,
+        "source_link": null
+      },
+      {
+        "order": 23,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.1,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 24,
+        "pin": "clock",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": 0.0,
+        "cumulative_delay": 0.35,
+        "source_link": null
+      },
+      {
+        "order": 26,
+        "pin": "library",
+        "instance": null,
+        "cell_type": null,
+        "incr_delay": -0.0329,
+        "cumulative_delay": 0.3171,
+        "source_link": null
+      }
+    ],
+    "logic_depth": 14,
+    "startpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "endpoint_source": {
+      "file": "/home/juneja/nebula/benchmarks/ethmac5/rtl/nebula_aux_domain.v",
+      "line_start": 26,
+      "line_end": 36,
+      "netlist_object": "aux0_seed_i_MUX2_X1_B_Z_DFFR_X1_D",
+      "confidence": 0.95,
+      "method": "src_attribute"
+    },
+    "mapping_status": "endpoints_only",
+    "raw_report_span": [
+      102,
+      1812
+    ]
+  },
+  "rtl_context": [
+    {
+      "file": "rtl/nebula_aux_domain.v",
+      "line_start": 1,
+      "line_end": 41,
+      "text": "// Observable auxiliary datapath for the fourth and fifth asynchronous domains.\n// The deliberately linear XOR reduction is cycle-exactly reassociable, giving\n// the optimization engine a genuine logic-depth target. CDC lives elsewhere.\n\n`default_nettype none\n\nmodule nebula_aux_domain #(\n    parameter integer WIDTH = 3328\n) (\n    input  wire              clk,\n    input  wire              reset,\n    input  wire              load,\n    input  wire       [31:0] seed,\n    output wire       [31:0] digest\n);\n    reg [WIDTH-1:0] state;\n\n    wire [31:0] mix0 = state[31:0]   ^ state[63:32];\n    wire [31:0] mix1 = mix0          ^ state[95:64];\n    wire [31:0] mix2 = mix1          ^ state[127:96];\n    wire [31:0] mix3 = mix2          ^ state[159:128];\n    wire [31:0] mix4 = mix3          ^ state[191:160];\n    wire [31:0] mix5 = mix4          ^ state[223:192];\n    wire [31:0] mix6 = mix5          ^ state[255:224];\n\n    always @(posedge clk or posedge reset) begin\n        if (reset) begin\n            state <= {{(WIDTH-32){1'b0}}, 32'h1};\n        end else begin\n            state[WIDTH-1:32] <= state[WIDTH-33:0];\n            if (load)\n                state[31:0] <= seed;\n            else\n                state[31:0] <= mix6;\n        end\n    end\n\n    assign digest = state[31:0] ^ state[WIDTH-1:WIDTH-32];\nendmodule\n\n`default_nettype wire",
+      "role": "critical_path_source",
+      "module": "nebula_aux_domain",
+      "editable": true
+    }
+  ],
+  "connection_map": [],
+  "invariants": {
+    "interfaces": "unchanged",
+    "latency": "unchanged",
+    "reset": "unchanged",
+    "clock": "unchanged",
+    "cdc": "forbidden"
+  },
+  "allowed_transformations": [
+    "balanced_adder_tree",
+    "common_subexpression_extraction",
+    "constant_folding",
+    "boolean_reassociation",
+    "mux_factoring",
+    "logic_replication"
+  ],
+  "forbidden_changes": [
+    "pipelining",
+    "retiming",
+    "clock_gating",
+    "reset_restructuring",
+    "cdc_modification",
+    "interface_change"
+  ],
+  "change_budget": {
+    "max_changed_lines": 40,
+    "max_changed_files": 1
+  },
+  "previous_attempts": [
+    {
+      "recommendation_id": "rec_0001",
+      "transformation_type": "balanced_adder_tree",
+      "patch_hash": "06c2079cb29c69d5bbb8de06ea1e8f9f5f6003b7728adb7041abd409a05c570c",
+      "verdict": "ACCEPTED",
+      "failure_class": "NONE",
+      "measured_delta": {
+        "wns": 0.09479,
+        "tns": 3.4968,
+        "cell_count": -100.0,
+        "cell_area": -142.0
+      }
+    }
+  ],
+  "required_output_schema": "AIRecommendation@1.0.0",
+  "model_data_classification": "bounded_context_only"
+}

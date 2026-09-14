@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "verification_id": "cand_0001_06c207_eqy",
+  "candidate_id": "cand_0001_06c207",
+  "method": "equivalence",
+  "tool": "eqy",
+  "tool_version": null,
+  "status": "PASS",
+  "equivalence_relation": {
+    "kind": "cycle_exact",
+    "latency_mapping": null,
+    "reset_assumption": "reset_sequence_identical",
+    "description": ""
+  },
+  "gold_hash": "8d3b1b91f8e52f039fd852ae7c221cb254fc2c152cb04c111e14ff0ae07d4727",
+  "gate_hash": "8d3b1b91f8e52f039fd852ae7c221cb254fc2c152cb04c111e14ff0ae07d4727",
+  "top": "",
+  "clocks_resets": [],
+  "assumptions": [],
+  "blackboxes": [],
+  "proof_scope": "whole_design",
+  "engine_strategy": "",
+  "runtime_s": 0.0,
+  "peak_memory_mb": null,
+  "proved_partitions": 0,
+  "failed_partitions": 0,
+  "unknown_partitions": 0,
+  "counterexample_artifacts": [],
+  "log_artifact": "/home/juneja/nebula/benchmarks/ethmac5/runs/20260913T164418Z_optimize/candidates/cand_0001_06c207/60_eqy/equiv/logfile.txt",
+  "limitations": [],
+  "provenance": {
+    "produced_by": "parsers.eqy_status",
+    "tool_version": null,
+    "command": [],
+    "artifact_paths": [
+      "/home/juneja/nebula/benchmarks/ethmac5/runs/20260913T164418Z_optimize/candidates/cand_0001_06c207/60_eqy/equiv/logfile.txt"
+    ],
+    "input_hashes": {},
+    "created_at": "2026-09-13T16:47:42Z",
+    "backend": "unknown"
+  }
+}
