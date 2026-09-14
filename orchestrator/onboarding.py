@@ -215,7 +215,6 @@ def _manifest_payload(
     repo_root = Path(__file__).resolve().parents[1]
     platform_root = repo_root / "platform" / "nangate45"
     tools_root = repo_root / "tools" / "bin"
-    orfs_flow = Path(os.environ.get("ORFS_FLOW_DIR", "/home/juneja/OpenROAD-flow-scripts/flow"))
     return {
         "schema_version": "1.0.0",
         "project_id": project_id,
@@ -255,12 +254,12 @@ def _manifest_payload(
         },
         "toolchain": {
             "tools": {
-                "yosys": {"binary": (tools_root / "yosys").as_posix()},
-                "opensta": {"binary": (tools_root / "sta").as_posix()},
-                "eqy": {"binary": (tools_root / "eqy").as_posix()},
+                "yosys": {"binary": _relative(tools_root / "yosys", output_root)},
+                "opensta": {"binary": _relative(tools_root / "sta", output_root)},
+                "eqy": {"binary": _relative(tools_root / "eqy", output_root)},
                 "orfs": {
-                    "binary": (tools_root / "make").as_posix(),
-                    "flow_dir": orfs_flow.as_posix(),
+                    "binary": _relative(tools_root / "make", output_root),
+                    "flow_dir": ".",
                 },
             }
         },

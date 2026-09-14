@@ -169,7 +169,10 @@ class ProjectConfiguration(NebulaRecord):
     def tool_binary(self, name: str, default: str | None = None) -> str:
         entry = self.toolchain.tools.get(name)
         if entry is not None:
-            return entry.binary
+            binary = Path(entry.binary).expanduser()
+            if not binary.is_absolute() and ("/" in entry.binary or "\\" in entry.binary):
+                binary = self.resolve(entry.binary)
+            return str(binary)
         if default is not None:
             return default
         raise KeyError(f"tool '{name}' is not declared in the toolchain lock")

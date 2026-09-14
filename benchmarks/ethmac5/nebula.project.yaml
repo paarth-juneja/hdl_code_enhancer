@@ -68,12 +68,12 @@ platform:
 
 toolchain:
   tools:
-    yosys: {binary: /home/juneja/nebula/tools/bin/yosys}
-    opensta: {binary: /home/juneja/nebula/tools/bin/sta}
-    eqy: {binary: /home/juneja/nebula/tools/bin/eqy}
+    yosys: {binary: ../../tools/bin/yosys}
+    opensta: {binary: ../../tools/bin/sta}
+    eqy: {binary: ../../tools/bin/eqy}
     orfs:
-      binary: /home/juneja/nebula/tools/bin/make
-      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+      binary: ../../tools/bin/make
+      flow_dir: .
 
 objective:
   primary_metric: wns

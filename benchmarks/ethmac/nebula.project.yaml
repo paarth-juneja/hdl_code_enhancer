@@ -47,15 +47,14 @@ platform:
     - ../../platform/nangate45/NangateOpenCellLibrary.macro.lef
 toolchain:
   tools:
-    yosys: {binary: /home/juneja/nebula/tools/bin/yosys}
-    opensta: {binary: /home/juneja/nebula/tools/bin/sta}
-    eqy: {binary: /home/juneja/nebula/tools/bin/eqy}
+    yosys: {binary: ../../tools/bin/yosys}
+    opensta: {binary: ../../tools/bin/sta}
+    eqy: {binary: ../../tools/bin/eqy}
     orfs:
-      binary: /home/juneja/nebula/tools/bin/make
-      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+      binary: ../../tools/bin/make
+      flow_dir: .
 security:
   editable_paths: [rtl/eth_crc.v]
   protected_paths: [rtl/eth_clockgen.v, rtl/eth_wishbone.v, rtl/eth_fifo.v]
 run_policy:
   timeouts_s: {synth: 600, sta: 180, orfs: 1800}
-

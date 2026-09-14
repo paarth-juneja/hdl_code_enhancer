@@ -60,8 +60,8 @@ constraints:
     - [clk_b, clk_b_div]
 
 # ---------------------------------------------------------------------------
-# Platform. These are symlinks into the host ORFS clone; Path.resolve() follows
-# them, which is why the generated synth.ys shows the ORFS path directly.
+# Platform. scripts/bootstrap.sh --with-real-tools copies these inputs from the
+# selected ORFS Docker image. They remain untracked due to upstream licensing.
 # ---------------------------------------------------------------------------
 platform:
   platform_id: nangate45
@@ -72,24 +72,22 @@ platform:
   analysis_corners: [typical]
 
 # ---------------------------------------------------------------------------
-# Toolchain. Each binary is a thin wrapper that runs the real tool inside the
-# ORFS Docker image, mounting the workspace and the ORFS clone at identical
-# host paths so absolute paths in generated scripts resolve unchanged inside
-# the container. Absolute by necessity: they are host entry points.
+# Toolchain. Paths are manifest-relative. Each wrapper discovers the checkout
+# root and runs the corresponding tool in the ORFS Docker image.
 # ---------------------------------------------------------------------------
 toolchain:
   tools:
     yosys:
-      binary: /home/juneja/nebula/tools/bin/yosys
+      binary: tools/bin/yosys
     # Keyed "opensta" to match adapters/opensta.py; the wrapper is named sta
     # after the in-image binary it runs.
     opensta:
-      binary: /home/juneja/nebula/tools/bin/sta
+      binary: tools/bin/sta
     eqy:
-      binary: /home/juneja/nebula/tools/bin/eqy
+      binary: tools/bin/eqy
     orfs:
-      binary: /home/juneja/nebula/tools/bin/make
-      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+      binary: tools/bin/make
+      flow_dir: .
 
 # ---------------------------------------------------------------------------
 # Objective. Maximise worst negative slack, with area held inside a declared

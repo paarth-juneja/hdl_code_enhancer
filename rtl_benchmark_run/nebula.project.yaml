@@ -38,23 +38,23 @@ constraints:
   - ["clk_m[4]", "clk_g[4]"]
 platform:
   platform_id: nangate45
-  liberty: ../../OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+  liberty: ../platform/nangate45/NangateOpenCellLibrary_typical.lib
   lef:
-  - ../../OpenROAD-flow-scripts/flow/platforms/nangate45/lef/NangateOpenCellLibrary.tech.lef
-  - ../../OpenROAD-flow-scripts/flow/platforms/nangate45/lef/NangateOpenCellLibrary.macro.lef
+  - ../platform/nangate45/NangateOpenCellLibrary.tech.lef
+  - ../platform/nangate45/NangateOpenCellLibrary.macro.lef
   analysis_corners:
   - typical
 toolchain:
   tools:
     yosys:
-      binary: /home/juneja/nebula/tools/bin/yosys
+      binary: ../tools/bin/yosys
     opensta:
-      binary: /home/juneja/nebula/tools/bin/sta
+      binary: ../tools/bin/sta
     eqy:
-      binary: /home/juneja/nebula/tools/bin/eqy
+      binary: ../tools/bin/eqy
     orfs:
-      binary: /home/juneja/nebula/tools/bin/make
-      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+      binary: ../tools/bin/make
+      flow_dir: .
 objective:
   primary_metric: wns
   direction: maximize

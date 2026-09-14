@@ -104,7 +104,7 @@ def orfs_invocation(
     flow_dir = (
         config.resolve(entry.flow_dir)
         if entry and entry.flow_dir
-        else config.project_root / "OpenROAD-flow-scripts" / "flow"
+        else config.project_root
     )
     binary = config.tool_binary("orfs", "make")
 

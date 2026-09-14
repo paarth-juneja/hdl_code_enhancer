@@ -39,7 +39,7 @@ constraints:
       period_ns: 0.46
   asynchronous_groups: []
 
-# Shared with the main project; the platform symlinks live one level up.
+# Shared with the main project; real-tool bootstrap installs the platform files.
 platform:
   platform_id: nangate45
   liberty: ../../platform/nangate45/NangateOpenCellLibrary_typical.lib
@@ -51,14 +51,14 @@ platform:
 toolchain:
   tools:
     yosys:
-      binary: /home/juneja/nebula/tools/bin/yosys
+      binary: ../../tools/bin/yosys
     opensta:
-      binary: /home/juneja/nebula/tools/bin/sta
+      binary: ../../tools/bin/sta
     eqy:
-      binary: /home/juneja/nebula/tools/bin/eqy
+      binary: ../../tools/bin/eqy
     orfs:
-      binary: /home/juneja/nebula/tools/bin/make
-      flow_dir: /home/juneja/OpenROAD-flow-scripts/flow
+      binary: ../../tools/bin/make
+      flow_dir: .
 
 objective:
   primary_metric: wns

@@ -52,6 +52,13 @@ slpp_all/
 *.pdf
 *.docx
 
+# Third-party Nangate45 inputs are copied from the selected ORFS Docker image
+# by scripts/bootstrap.sh --with-real-tools. Their headers restrict direct
+# redistribution, so the checkout stores only setup instructions.
+/platform/nangate45/NangateOpenCellLibrary_typical.lib
+/platform/nangate45/NangateOpenCellLibrary.tech.lef
+/platform/nangate45/NangateOpenCellLibrary.macro.lef
+
 # ─── OS / editor cruft ─────────────────────────────────────
 .DS_Store
 Thumbs.db
